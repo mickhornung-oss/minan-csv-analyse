@@ -1,0 +1,13 @@
+ID,Name,Alter,Stadt,Gehalt,Abteilung,Eintrittsdatum
+1,Anna Müller,32,Berlin,52000.00,Vertrieb,2019-03-15
+2,Bob Schmidt,28,München,45000.00,IT,2020-07-01
+3,Clara Fischer,45,Hamburg,68000.00,Leitung,2015-01-10
+4,David Weber,35,Berlin,55000.00,Vertrieb,2018-06-20
+5,Eva Braun,29,Köln,,IT,2021-02-28
+6,Frank Meier,41,Hamburg,62000.00,Produktion,2016-09-05
+7,Greta Schulz,38,München,58000.00,IT,2017-11-12
+8,Hans König,52,Berlin,71000.00,Leitung,2012-04-01
+9,Iris Lang,26,Köln,43000.00,Vertrieb,2022-01-15
+10,Jan Bauer,33,Berlin,51000.00,Produktion,2019-08-20
+11,Anna Müller,32,Berlin,52000.00,Vertrieb,2019-03-15
+12,Lars Wolf,47,Hamburg,65000.00,Produktion,2014-03-22

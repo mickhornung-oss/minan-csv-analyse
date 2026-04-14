@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+*.egg
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# PyInstaller
+build/dist/
+build/*.exe
+*.manifest
+*.spec.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Projekt-spezifisch
+*.log
+*.tmp
+
+# Claude
+.claude/
+
+# pytest
+.pytest_cache/
+
+# Generierte Outputs
+output/reports/
+output/csv/
