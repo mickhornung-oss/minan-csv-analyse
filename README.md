@@ -1,18 +1,14 @@
-# MinAn 1.4 — CSV Quick Analysis
+# MinAn 1.4 - CSV Quick Analysis
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Tests](https://github.com/mickhornung-oss/minan-csv-analyse/actions/workflows/python-tests.yml/badge.svg)](https://github.com/mickhornung-oss/minan-csv-analyse/actions)
-[![codecov](https://codecov.io/gh/mickhornung-oss/minan-csv-analyse/branch/main/graph/badge.svg)](https://codecov.io/gh/mickhornung-oss/minan-csv-analyse)
+[![Tests](https://github.com/mickhornung-oss/minan-csv-analyse/actions/workflows/python-tests.yml/badge.svg)](https://github.com/mickhornung-oss/minan-csv-analyse/actions/workflows/python-tests.yml)
 
-Portable Windows desktop tool for rapid CSV analysis — load a file, get an instant structural profile, data quality report, charts, filtered views, and an HTML export. The original file is never modified.
+Portable Windows desktop tool for rapid CSV analysis. Load a file and get structural profiling, data quality checks, charts, filtered views, and a local HTML report export. The source CSV is not modified.
 
-> **Deutsch:** Portables Windows-Desktop-Tool zur schnellen CSV-Analyse mit Strukturprofil, Datenqualitaet, Diagrammen und lokalem HTML-Bericht.
+## Demo
 
-## 📸 Demo
-
-<!-- Add a screenshot here: images/minan-demo.png -->
-*Arbeitsansicht mit Filtern, Schnellansichten und Diagrammen.*
+Screenshot will be added after the next UI capture update.
 
 ## Features
 
@@ -30,10 +26,7 @@ Portable Windows desktop tool for rapid CSV analysis — load a file, get an ins
 ## Quick Start (Dev Mode)
 
 ```batch
-# 1. Install dependencies
 pip install -r requirements.txt
-
-# 2. Run the app
 run_dev.bat
 ```
 
@@ -43,37 +36,33 @@ run_dev.bat
 build_release.bat
 ```
 
-Output in `dist/MinAn_1_4/MinAn.exe` — portable, no Python installation needed.
+Output: `dist/MinAn_1_4/MinAn.exe` (portable, no Python installation needed).
 
 ## Tech Stack
 
-- **Python** 3.10+
-- **PySide6** — desktop GUI
-- **pandas** — data processing
-- **matplotlib** — charts
-- **PyInstaller** — portable build
+- Python 3.10+
+- PySide6
+- pandas
+- matplotlib
+- PyInstaller
 
 ## Tests
 
 ```bash
 pytest tests/ -v
-# 155 tests passing
 ```
 
-Test coverage includes:
-- Service unit tests (profile, quality, chart, export, report, transform)
-- GUI smoke tests (offscreen, full user flow)
-- Stress tests for type detection consistency
+Current suite size: 155 tests.
 
 ## Project Structure
 
-```
+```text
 src/minan_v1/
-├── domain/         # Data models and enums (dataclasses)
-├── services/       # Business logic — one service per concern
-└── ui/             # PySide6 UI components
+|-- domain/      # Data models and enums
+|-- services/    # Business logic services
+`-- ui/          # PySide6 UI components
 
-tests/              # 17 test files, 155 tests
+tests/           # Test suite
 ```
 
 ## Topics
