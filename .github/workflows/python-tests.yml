@@ -81,9 +81,3 @@ jobs:
         QT_QPA_PLATFORM: offscreen
       run: |
         pytest tests/ --cov=src --cov-report=xml -v
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        fail_ci_if_error: false
-      if: always()
