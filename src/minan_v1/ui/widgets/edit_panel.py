@@ -20,7 +20,12 @@ from PySide6.QtWidgets import (
 )
 
 from minan_v1.domain.enums import ColumnType
-from minan_v1.domain.models import FilterCondition, FilterOperator, MarkingResult, SortState
+from minan_v1.domain.models import (
+    FilterCondition,
+    FilterOperator,
+    MarkingResult,
+    SortState,
+)
 from minan_v1.domain.session_state import SessionState
 from minan_v1.services.transform_service import (
     apply_filter,
@@ -50,7 +55,9 @@ class EditPanel(QWidget):
     def set_main_window(self, main_window) -> None:
         self._main_window = main_window
 
-    def _configure_action_button(self, button: QPushButton, min_width: int, max_width: int) -> None:
+    def _configure_action_button(
+        self, button: QPushButton, min_width: int, max_width: int
+    ) -> None:
         button.setMinimumWidth(min_width)
         button.setMaximumWidth(max_width)
         button.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
@@ -575,7 +582,9 @@ class EditPanel(QWidget):
             self._show_error("Keine Spalte ausgewaehlt.")
             return
 
-        sort_state = SortState(column=column, ascending=self._sort_asc_radio.isChecked())
+        sort_state = SortState(
+            column=column, ascending=self._sort_asc_radio.isChecked()
+        )
         result = apply_sort(self._session.working_df, sort_state)
         if not result.success or result.df is None:
             self._show_error(result.message)
@@ -625,7 +634,11 @@ class EditPanel(QWidget):
 
         self._sync_duplicate_marking()
         self._update_mark_toggle_labels()
-        self._update_status("Dublettenmarkierung aktiviert." if checked else "Dublettenmarkierung deaktiviert.")
+        self._update_status(
+            "Dublettenmarkierung aktiviert."
+            if checked
+            else "Dublettenmarkierung deaktiviert."
+        )
         self._refresh_main_window()
 
     def _on_toggle_missing(self, checked: bool) -> None:
@@ -637,7 +650,11 @@ class EditPanel(QWidget):
 
         self._sync_missing_marking()
         self._update_mark_toggle_labels()
-        self._update_status("Fehlwertmarkierung aktiviert." if checked else "Fehlwertmarkierung deaktiviert.")
+        self._update_status(
+            "Fehlwertmarkierung aktiviert."
+            if checked
+            else "Fehlwertmarkierung deaktiviert."
+        )
         self._refresh_main_window()
 
     def _on_apply_type(self) -> None:
@@ -662,7 +679,9 @@ class EditPanel(QWidget):
         if self._type_combo.currentIndex() == 0:
             manual_types.pop(column, None)
             self._session.manual_column_types = manual_types
-            self._update_status(f"Typ fuer Spalte '{column}' auf automatisch zurueckgesetzt.")
+            self._update_status(
+                f"Typ fuer Spalte '{column}' auf automatisch zurueckgesetzt."
+            )
         else:
             column_type = type_map.get(self._type_combo.currentIndex())
             if column_type is None:
@@ -670,7 +689,9 @@ class EditPanel(QWidget):
                 return
             manual_types[column] = column_type
             self._session.manual_column_types = manual_types
-            self._update_status(f"Typ fuer Spalte '{column}' auf {column_type.name} gesetzt.")
+            self._update_status(
+                f"Typ fuer Spalte '{column}' auf {column_type.name} gesetzt."
+            )
 
         self._refresh_main_window()
 
@@ -715,7 +736,9 @@ class EditPanel(QWidget):
             if not value1 or not value2:
                 self._show_error("Fuer Bereichsfilter werden zwei Werte benoetigt.")
                 return None
-            return FilterCondition(column=column, operator=operator, value=value1, value2=value2)
+            return FilterCondition(
+                column=column, operator=operator, value=value1, value2=value2
+            )
 
         if not value1:
             self._show_error("Ein Wert ist erforderlich.")
@@ -739,7 +762,9 @@ class EditPanel(QWidget):
                 renamed_filters.append(condition)
         self._session.active_filters = renamed_filters
 
-        hidden = [new_name if col == old_name else col for col in self._session.hidden_columns]
+        hidden = [
+            new_name if col == old_name else col for col in self._session.hidden_columns
+        ]
         self._session.hidden_columns = hidden
 
         manual_types = self._session.manual_column_types.copy()
@@ -749,9 +774,13 @@ class EditPanel(QWidget):
 
     def _remove_view_state_references(self, column: str) -> None:
         self._session.active_filters = [
-            condition for condition in self._session.active_filters if condition.column != column
+            condition
+            for condition in self._session.active_filters
+            if condition.column != column
         ]
-        self._session.hidden_columns = [col for col in self._session.hidden_columns if col != column]
+        self._session.hidden_columns = [
+            col for col in self._session.hidden_columns if col != column
+        ]
 
         manual_types = self._session.manual_column_types.copy()
         if column in manual_types:
@@ -786,14 +815,20 @@ class EditPanel(QWidget):
 
     def _update_mark_toggle_labels(self) -> None:
         self._mark_duplicates_toggle.setText(
-            "Dubletten: EIN" if self._mark_duplicates_toggle.isChecked() else "Dubletten: AUS"
+            "Dubletten: EIN"
+            if self._mark_duplicates_toggle.isChecked()
+            else "Dubletten: AUS"
         )
         self._mark_missing_toggle.setText(
-            "Fehlwerte: EIN" if self._mark_missing_toggle.isChecked() else "Fehlwerte: AUS"
+            "Fehlwerte: EIN"
+            if self._mark_missing_toggle.isChecked()
+            else "Fehlwerte: AUS"
         )
 
     def _apply_responsive_layout(self, force: bool = False) -> None:
-        available_width = self._scroll_area.viewport().width() if self._scroll_area else self.width()
+        available_width = (
+            self._scroll_area.viewport().width() if self._scroll_area else self.width()
+        )
         use_two_columns = available_width >= self._TWO_COLUMN_BREAKPOINT
 
         if not force and self._two_column_mode == use_two_columns:

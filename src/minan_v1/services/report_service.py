@@ -35,13 +35,22 @@ def export_html_report(session: SessionState, target_path: Path) -> ReportResult
     """Exportiert einen HTML-Bericht aus der aktuellen aktiven Sicht."""
     ensure_runtime_dirs()
     if not session.has_data or session.current_df is None:
-        return ReportResult(success=False, error="Keine Daten fuer den Bericht vorhanden.")
-    if session.import_result is None or session.profile is None or session.quality_report is None or session.summary is None:
+        return ReportResult(
+            success=False, error="Keine Daten fuer den Bericht vorhanden."
+        )
+    if (
+        session.import_result is None
+        or session.profile is None
+        or session.quality_report is None
+        or session.summary is None
+    ):
         return ReportResult(success=False, error="Analysezustand ist unvollstaendig.")
     if target_path is None:
         return ReportResult(success=False, error="Kein Zielpfad angegeben.")
     if session.source_path and target_path == session.source_path:
-        return ReportResult(success=False, error="Die Originaldatei darf nicht ueberschrieben werden.")
+        return ReportResult(
+            success=False, error="Die Originaldatei darf nicht ueberschrieben werden."
+        )
 
     if target_path.suffix.lower() != ".html":
         target_path = target_path.with_suffix(".html")
@@ -62,7 +71,10 @@ def export_html_report(session: SessionState, target_path: Path) -> ReportResult
             charts=charts,
         )
     except PermissionError:
-        return ReportResult(success=False, error=f"Keine Berechtigung zum Schreiben nach '{target_path}'.")
+        return ReportResult(
+            success=False,
+            error=f"Keine Berechtigung zum Schreiben nach '{target_path}'.",
+        )
     except Exception as exc:
         return ReportResult(success=False, error=f"Fehler beim Berichtsexport: {exc}")
 
@@ -92,7 +104,9 @@ def _build_report_charts(session: SessionState) -> list[ReportChart]:
 
     report_charts: list[ReportChart] = []
     for title, fig in chart_specs[:3]:
-        report_charts.append(ReportChart(title=title, image_base64=_figure_to_base64(fig)))
+        report_charts.append(
+            ReportChart(title=title, image_base64=_figure_to_base64(fig))
+        )
     return report_charts
 
 
@@ -103,7 +117,9 @@ def _figure_to_base64(fig) -> str:
     return base64.b64encode(buffer.getvalue()).decode("ascii")
 
 
-def _render_html_report(session: SessionState, created_at: datetime, charts: list[ReportChart]) -> str:
+def _render_html_report(
+    session: SessionState, created_at: datetime, charts: list[ReportChart]
+) -> str:
     profile = session.profile
     quality = session.quality_report
     summary = session.summary
@@ -112,22 +128,33 @@ def _render_html_report(session: SessionState, created_at: datetime, charts: lis
     active_filters = session.active_filter_texts()
     view_text = session.describe_active_view()
 
-    warning_items = [finding.message for finding in quality.findings if finding.severity in ("warning", "critical")]
-    hint_items = [finding.message for finding in quality.findings if finding.severity == "info"]
-    numeric_columns = [c for c in profile.columns if c.column_type == ColumnType.NUMERIC][:5]
+    warning_items = [
+        finding.message
+        for finding in quality.findings
+        if finding.severity in ("warning", "critical")
+    ]
+    hint_items = [
+        finding.message for finding in quality.findings if finding.severity == "info"
+    ]
+    numeric_columns = [
+        c for c in profile.columns if c.column_type == ColumnType.NUMERIC
+    ][:5]
     notable_columns = profile.columns[:8]
 
-    charts_html = "".join(
-        [
-            (
-                "<section class='chart-card'>"
-                f"<h3>{_esc(chart.title)}</h3>"
-                f"<img alt='{_esc(chart.title)}' src='data:image/png;base64,{chart.image_base64}' />"
-                "</section>"
-            )
-            for chart in charts
-        ]
-    ) or "<p class='muted'>Fuer diese Sicht konnten keine Diagramm-Snapshots erzeugt werden.</p>"
+    charts_html = (
+        "".join(
+            [
+                (
+                    "<section class='chart-card'>"
+                    f"<h3>{_esc(chart.title)}</h3>"
+                    f"<img alt='{_esc(chart.title)}' src='data:image/png;base64,{chart.image_base64}' />"
+                    "</section>"
+                )
+                for chart in charts
+            ]
+        )
+        or "<p class='muted'>Fuer diese Sicht konnten keine Diagramm-Snapshots erzeugt werden.</p>"
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="de">
@@ -385,7 +412,9 @@ def _render_metric_row(column) -> str:
 
 
 def _render_column_row(column) -> str:
-    top_values = ", ".join([f"{name} ({count})" for name, count in column.top_values[:3]]) or "-"
+    top_values = (
+        ", ".join([f"{name} ({count})" for name, count in column.top_values[:3]]) or "-"
+    )
     return (
         "<tr>"
         f"<td>{_esc(column.name)}</td>"

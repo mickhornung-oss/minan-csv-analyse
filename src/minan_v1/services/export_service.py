@@ -40,7 +40,10 @@ def export_csv(
             export_df = export_df.drop(columns=columns_to_drop)
 
     if export_df.empty:
-        return ExportResult(success=False, error="Alle Spalten sind ausgeblendet. Nichts zu exportieren.")
+        return ExportResult(
+            success=False,
+            error="Alle Spalten sind ausgeblendet. Nichts zu exportieren.",
+        )
 
     try:
         export_df.to_csv(target_path, sep=separator, encoding=encoding, index=False)
@@ -51,6 +54,9 @@ def export_csv(
             column_count=len(export_df.columns),
         )
     except PermissionError:
-        return ExportResult(success=False, error=f"Keine Berechtigung zum Schreiben nach '{target_path}'.")
+        return ExportResult(
+            success=False,
+            error=f"Keine Berechtigung zum Schreiben nach '{target_path}'.",
+        )
     except Exception as exc:
         return ExportResult(success=False, error=f"Fehler beim Export: {exc}")

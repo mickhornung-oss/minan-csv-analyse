@@ -14,10 +14,14 @@ from minan_v1.domain.models import (
 def rename_column(df: pd.DataFrame, old_name: str, new_name: str) -> TransformResult:
     """Benennt eine Spalte in der Arbeitskopie um."""
     if old_name not in df.columns:
-        return TransformResult(success=False, message=f"Spalte '{old_name}' nicht gefunden.")
+        return TransformResult(
+            success=False, message=f"Spalte '{old_name}' nicht gefunden."
+        )
 
     if new_name in df.columns and new_name != old_name:
-        return TransformResult(success=False, message=f"Spalte '{new_name}' existiert bereits.")
+        return TransformResult(
+            success=False, message=f"Spalte '{new_name}' existiert bereits."
+        )
 
     try:
         renamed_df = df.rename(columns={old_name: new_name})
@@ -35,7 +39,9 @@ def rename_column(df: pd.DataFrame, old_name: str, new_name: str) -> TransformRe
 def drop_column(df: pd.DataFrame, column: str) -> TransformResult:
     """Entfernt eine Spalte aus der Arbeitskopie."""
     if column not in df.columns:
-        return TransformResult(success=False, message=f"Spalte '{column}' nicht gefunden.")
+        return TransformResult(
+            success=False, message=f"Spalte '{column}' nicht gefunden."
+        )
 
     try:
         dropped_df = df.drop(columns=[column])
@@ -53,7 +59,9 @@ def drop_column(df: pd.DataFrame, column: str) -> TransformResult:
 def apply_filter(df: pd.DataFrame, condition: FilterCondition) -> TransformResult:
     """Wendet einen einzelnen Filter auf einen DataFrame an."""
     if condition.column not in df.columns:
-        return TransformResult(success=False, message=f"Spalte '{condition.column}' nicht gefunden.")
+        return TransformResult(
+            success=False, message=f"Spalte '{condition.column}' nicht gefunden."
+        )
 
     try:
         filtered_df = _apply_filter_condition(df, condition)
@@ -70,7 +78,9 @@ def apply_filter(df: pd.DataFrame, condition: FilterCondition) -> TransformResul
         return TransformResult(success=False, message=f"Fehler beim Filtern: {exc}")
 
 
-def apply_filters(df: pd.DataFrame, conditions: list[FilterCondition]) -> TransformResult:
+def apply_filters(
+    df: pd.DataFrame, conditions: list[FilterCondition]
+) -> TransformResult:
     """Wendet mehrere Filter nacheinander an."""
     try:
         filtered_df = df.copy()
@@ -94,7 +104,9 @@ def apply_filters(df: pd.DataFrame, conditions: list[FilterCondition]) -> Transf
 def apply_sort(df: pd.DataFrame, sort_state: SortState) -> TransformResult:
     """Wendet eine Sortierung auf die Arbeitskopie an."""
     if sort_state.column not in df.columns:
-        return TransformResult(success=False, message=f"Spalte '{sort_state.column}' nicht gefunden.")
+        return TransformResult(
+            success=False, message=f"Spalte '{sort_state.column}' nicht gefunden."
+        )
 
     try:
         df_sorted = df.sort_values(
@@ -218,7 +230,9 @@ def focus_outlier_candidates(df: pd.DataFrame) -> TransformResult:
     )
 
 
-def _apply_filter_condition(df: pd.DataFrame, condition: FilterCondition) -> pd.DataFrame:
+def _apply_filter_condition(
+    df: pd.DataFrame, condition: FilterCondition
+) -> pd.DataFrame:
     series = df[condition.column]
 
     if condition.operator == FilterOperator.EQUAL:
@@ -245,7 +259,9 @@ def _apply_filter_condition(df: pd.DataFrame, condition: FilterCondition) -> pd.
         return df[mask].copy()
 
     if condition.operator == FilterOperator.CONTAINS:
-        mask = series.astype(str).str.contains(str(condition.value), na=False, regex=False)
+        mask = series.astype(str).str.contains(
+            str(condition.value), na=False, regex=False
+        )
         return df[mask].copy()
 
     if condition.operator == FilterOperator.STARTS_WITH:
@@ -272,7 +288,9 @@ def _build_equality_mask(series: pd.Series, raw_value: str, negate: bool) -> pd.
         pass
 
     string_series = series.astype(str)
-    return string_series != str(raw_value) if negate else string_series == str(raw_value)
+    return (
+        string_series != str(raw_value) if negate else string_series == str(raw_value)
+    )
 
 
 def _to_float(value: str) -> float:

@@ -3,8 +3,8 @@
 from pathlib import Path
 
 from minan_v1.domain.models import FilterCondition, FilterOperator
-from minan_v1.resources import default_report_path
 from minan_v1.domain.session_state import SessionState
+from minan_v1.resources import default_report_path
 from minan_v1.services.import_service import load_csv
 from minan_v1.services.profile_service import create_profile
 from minan_v1.services.quality_service import compute_quality_report
@@ -56,8 +56,12 @@ class TestReportService:
         session = _prepare_session(csv_path)
         session.add_filter(FilterCondition("Stadt", FilterOperator.EQUAL, "Berlin"))
         session.set_quick_view_mode("outliers")
-        session.profile = create_profile(session.current_df, session.manual_column_types)
-        session.quality_report = compute_quality_report(session.current_df, session.profile)
+        session.profile = create_profile(
+            session.current_df, session.manual_column_types
+        )
+        session.quality_report = compute_quality_report(
+            session.current_df, session.profile
+        )
         session.summary = generate_summary(session.profile, session.quality_report)
 
         target = tmp_path / "filtered_report.html"
@@ -68,7 +72,7 @@ class TestReportService:
         assert "1 Filter aktiv" in html_text
         assert "Schnellansicht: Ausreisser-Kandidaten" in html_text
         assert f"Zeilen in der aktuell sichtbaren Analyseansicht</p>" in html_text
-        assert f"<div class=\"stat\">{len(session.current_df)}</div>" in html_text
+        assert f'<div class="stat">{len(session.current_df)}</div>' in html_text
         assert "Stadt = Berlin" in html_text
 
     def test_report_contains_summary_and_findings(self, tmp_path, df_with_problems):
@@ -86,7 +90,9 @@ class TestReportService:
         # Quality findings sind in jedem Fall vorhanden (können verschiedene Formen haben)
         assert "Spalte" in html_text or "Zeile" in html_text or "Duplikat" in html_text
 
-    def test_report_does_not_modify_original_file_or_original_df(self, tmp_path, sample_df):
+    def test_report_does_not_modify_original_file_or_original_df(
+        self, tmp_path, sample_df
+    ):
         csv_path = tmp_path / "original.csv"
         sample_df.to_csv(csv_path, index=False)
         original_bytes = csv_path.read_bytes()

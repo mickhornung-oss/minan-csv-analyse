@@ -56,13 +56,18 @@ class DataFrameTableModel(QAbstractTableModel):
 
         row_idx = index.row()
         col_idx = index.column()
-        
+
         # Prüfe ob der Wert fehlt
         value = self._df.iloc[row_idx, col_idx]
         data_index = self._df.index[row_idx]
         column_name = self._df.columns[col_idx]
-        is_missing = self._show_missing_marking and (data_index, column_name) in self._missing_cells
-        is_duplicate = self._show_duplicate_marking and data_index in self._duplicate_rows
+        is_missing = (
+            self._show_missing_marking
+            and (data_index, column_name) in self._missing_cells
+        )
+        is_duplicate = (
+            self._show_duplicate_marking and data_index in self._duplicate_rows
+        )
 
         if role == Qt.DisplayRole:
             if pd.isna(value):
@@ -71,6 +76,7 @@ class DataFrameTableModel(QAbstractTableModel):
 
         if role == Qt.ForegroundRole:
             from PySide6.QtGui import QColor
+
             if is_missing:
                 # Graue Textfarbe für fehlende Werte
                 return QColor(180, 180, 180)
@@ -81,6 +87,7 @@ class DataFrameTableModel(QAbstractTableModel):
 
         if role == Qt.BackgroundRole:
             from PySide6.QtGui import QColor
+
             if is_missing:
                 # Dezenter gelblicher Hintergrund für fehlende Werte
                 return QColor(255, 255, 230)
@@ -98,8 +105,9 @@ class DataFrameTableModel(QAbstractTableModel):
 
         return None
 
-    def headerData(self, section: int, orientation: Qt.Orientation,
-                   role: int = Qt.DisplayRole) -> Any:
+    def headerData(
+        self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole
+    ) -> Any:
         if role != Qt.DisplayRole:
             return None
 

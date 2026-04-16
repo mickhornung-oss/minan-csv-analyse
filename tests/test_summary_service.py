@@ -1,7 +1,7 @@
 """Tests für den Summary-Service."""
 
-import pytest
 import pandas as pd
+import pytest
 
 from minan_v1.services.profile_service import create_profile
 from minan_v1.services.quality_service import compute_quality_report
@@ -49,7 +49,9 @@ class TestSummaryService:
         df = pd.DataFrame({"A": [1, 2, 3], "B": ["x", "y", "z"]})
         summary = self._make_summary(df)
         # Neue kompakte Summary: "Keine kritischen Qualitätsprobleme" statt "Keine doppelten"
-        assert "keine" in summary.text.lower() and ("kritisch" in summary.text.lower() or "doppelt" not in summary.text.lower())
+        assert "keine" in summary.text.lower() and (
+            "kritisch" in summary.text.lower() or "doppelt" not in summary.text.lower()
+        )
 
     def test_mentions_empty_columns(self, df_with_problems):
         """Zusammenfassung erwähnt leere Spalten."""

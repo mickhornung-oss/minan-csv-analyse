@@ -294,7 +294,9 @@ class SessionState:
         self._view_df = df
 
     @staticmethod
-    def _apply_filter_condition(df: pd.DataFrame, condition: FilterCondition) -> pd.DataFrame:
+    def _apply_filter_condition(
+        df: pd.DataFrame, condition: FilterCondition
+    ) -> pd.DataFrame:
         if condition.column not in df.columns:
             return df
 
@@ -327,7 +329,9 @@ class SessionState:
             high = float(condition.value2)
             mask = (numeric_series >= low) & (numeric_series <= high)
         elif condition.operator == FilterOperator.CONTAINS:
-            mask = series.astype(str).str.contains(str(condition.value), na=False, regex=False)
+            mask = series.astype(str).str.contains(
+                str(condition.value), na=False, regex=False
+            )
         elif condition.operator == FilterOperator.STARTS_WITH:
             mask = series.astype(str).str.startswith(str(condition.value), na=False)
         elif condition.operator == FilterOperator.IS_EMPTY:

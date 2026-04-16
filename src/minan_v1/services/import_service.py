@@ -10,8 +10,9 @@ from minan_v1.domain.models import ImportResult
 from minan_v1.utils.csv_sniffer import detect_encoding, detect_separator
 
 
-def load_csv(path: Path, encoding: Optional[str] = None,
-             separator: Optional[str] = None) -> tuple[pd.DataFrame, ImportResult]:
+def load_csv(
+    path: Path, encoding: Optional[str] = None, separator: Optional[str] = None
+) -> tuple[pd.DataFrame, ImportResult]:
     """Lädt eine CSV-Datei und gibt DataFrame + ImportResult zurück.
 
     Erkennt Encoding und Separator automatisch, wenn nicht angegeben.
@@ -57,9 +58,7 @@ def load_csv(path: Path, encoding: Optional[str] = None,
             df = _try_load(path, fallback_enc, separator, result)
             if df is not None:
                 result.encoding = fallback_enc
-                result.warnings.append(
-                    f"Fallback-Encoding verwendet: {fallback_enc}"
-                )
+                result.warnings.append(f"Fallback-Encoding verwendet: {fallback_enc}")
                 break
 
     if df is None:
@@ -68,15 +67,15 @@ def load_csv(path: Path, encoding: Optional[str] = None,
 
     # --- Plausibilitätsprüfung ---
     if df.empty or len(df.columns) == 0:
-        result.error = "Keine Spalten erkannt – Datei ist möglicherweise keine gültige CSV."
+        result.error = (
+            "Keine Spalten erkannt – Datei ist möglicherweise keine gültige CSV."
+        )
         result.success = False
         return pd.DataFrame(), result
 
     if len(df.columns) == 1 and separator != ",":
         # Vielleicht falscher Separator – Warnung
-        result.warnings.append(
-            "Nur eine Spalte erkannt. Prüfen Sie das Trennzeichen."
-        )
+        result.warnings.append("Nur eine Spalte erkannt. Prüfen Sie das Trennzeichen.")
 
     # --- Ergebnis ---
     result.success = True
@@ -86,8 +85,9 @@ def load_csv(path: Path, encoding: Optional[str] = None,
     return df, result
 
 
-def _try_load(path: Path, encoding: str, separator: str,
-              result: ImportResult) -> Optional[pd.DataFrame]:
+def _try_load(
+    path: Path, encoding: str, separator: str, result: ImportResult
+) -> Optional[pd.DataFrame]:
     """Versucht eine CSV mit gegebenem Encoding/Separator zu laden."""
     try:
         df = pd.read_csv(

@@ -144,7 +144,9 @@ class ChartsPanel(QWidget):
                 return create_correlation_heatmap(self._df)
         except (ValueError, TypeError, KeyError) as exc:
             self._last_error_message = f"Diagramm konnte nicht erstellt werden: {exc}"
-            self._logger.exception("Chart rendering failed for %s/%s", chart_id, col_name)
+            self._logger.exception(
+                "Chart rendering failed for %s/%s", chart_id, col_name
+            )
             return None
         return None
 
@@ -160,12 +162,19 @@ class ChartsPanel(QWidget):
         for i in reversed(range(self._chart_area.count())):
             item = self._chart_area.itemAt(i)
             widget = item.widget()
-            if widget and isinstance(widget, QLabel) and widget is not self._placeholder:
+            if (
+                widget
+                and isinstance(widget, QLabel)
+                and widget is not self._placeholder
+            ):
                 self._chart_area.removeWidget(widget)
                 widget.deleteLater()
 
         if fig is None:
-            hint = QLabel(self._last_error_message or "Fuer diese Auswahl ist kein Diagramm verfuegbar.")
+            hint = QLabel(
+                self._last_error_message
+                or "Fuer diese Auswahl ist kein Diagramm verfuegbar."
+            )
             hint.setObjectName("sectionHintLabel")
             hint.setAlignment(Qt.AlignCenter)
             self._chart_area.addWidget(hint)

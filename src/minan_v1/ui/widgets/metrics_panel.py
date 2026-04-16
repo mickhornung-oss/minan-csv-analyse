@@ -1,10 +1,15 @@
 """Kennzahlen-Panel: Zeigt Standardkennzahlen pro Spalte in Tabellenform."""
 
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QTabWidget, QTableWidget, QTableWidgetItem,
-    QLabel, QHeaderView,
-)
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
+    QHeaderView,
+    QLabel,
+    QTableWidget,
+    QTableWidgetItem,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
+)
 
 from minan_v1.domain.enums import ColumnType
 from minan_v1.domain.models import DatasetProfile
@@ -40,19 +45,20 @@ class MetricsPanel(QWidget):
             self._sub_tabs.removeTab(0)
 
         numeric = [c for c in profile.columns if c.column_type == ColumnType.NUMERIC]
-        categorical = [c for c in profile.columns
-                       if c.column_type == ColumnType.CATEGORICAL]
+        categorical = [
+            c for c in profile.columns if c.column_type == ColumnType.CATEGORICAL
+        ]
 
         if numeric:
             self._sub_tabs.addTab(
                 self._build_numeric_table(numeric, profile.row_count),
-                f"Numerisch ({len(numeric)})"
+                f"Numerisch ({len(numeric)})",
             )
 
         if categorical:
             self._sub_tabs.addTab(
                 self._build_categorical_table(categorical, profile.row_count),
-                f"Kategorisch ({len(categorical)})"
+                f"Kategorisch ({len(categorical)})",
             )
 
         if not numeric and not categorical:
@@ -63,15 +69,28 @@ class MetricsPanel(QWidget):
     def _build_numeric_table(self, columns, row_count: int) -> QTableWidget:
         """Erstellt die Tabelle für numerische Kennzahlen."""
         headers = [
-            "Spalte", "Gültig", "Fehlend %", "Mean", "Median", "Min", "Max", "Std", "Q1", "Q3",
+            "Spalte",
+            "Gültig",
+            "Fehlend %",
+            "Mean",
+            "Median",
+            "Min",
+            "Max",
+            "Std",
+            "Q1",
+            "Q3",
         ]
         table = QTableWidget(len(columns), len(headers))
         table.setHorizontalHeaderLabels(headers)
 
         # Kompakte Spaltenbreiten: Name variabel, Rest fest
-        table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)  # Spaltenname
+        table.horizontalHeader().setSectionResizeMode(
+            0, QHeaderView.Stretch
+        )  # Spaltenname
         for col_idx in range(1, len(headers)):
-            table.horizontalHeader().setSectionResizeMode(col_idx, QHeaderView.ResizeToContents)
+            table.horizontalHeader().setSectionResizeMode(
+                col_idx, QHeaderView.ResizeToContents
+            )
 
         # Row-Höhe und Abstände für saubere Anzeige
         table.verticalHeader().setDefaultSectionSize(26)
@@ -107,16 +126,26 @@ class MetricsPanel(QWidget):
     def _build_categorical_table(self, columns, row_count: int) -> QTableWidget:
         """Erstellt die Tabelle für kategoriale Kennzahlen."""
         headers = [
-            "Spalte", "Gültig", "Fehlend %", "Unique", "Top-Werte",
+            "Spalte",
+            "Gültig",
+            "Fehlend %",
+            "Unique",
+            "Top-Werte",
         ]
         table = QTableWidget(len(columns), len(headers))
         table.setHorizontalHeaderLabels(headers)
 
         # Kompakte Spaltenbreiten: Name und Top-Werte variabel, Rest fest
-        table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)  # Spaltenname
+        table.horizontalHeader().setSectionResizeMode(
+            0, QHeaderView.Stretch
+        )  # Spaltenname
         for col_idx in range(1, 4):
-            table.horizontalHeader().setSectionResizeMode(col_idx, QHeaderView.ResizeToContents)
-        table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Stretch)  # Top-Werte
+            table.horizontalHeader().setSectionResizeMode(
+                col_idx, QHeaderView.ResizeToContents
+            )
+        table.horizontalHeader().setSectionResizeMode(
+            4, QHeaderView.Stretch
+        )  # Top-Werte
 
         # Row-Höhe und Abstände für saubere Anzeige
         table.verticalHeader().setDefaultSectionSize(26)
@@ -127,9 +156,11 @@ class MetricsPanel(QWidget):
         table.setEditTriggers(QTableWidget.NoEditTriggers)
 
         for row, col in enumerate(columns):
-            top_str = ", ".join(
-                f"{name} ({count})" for name, count in col.top_values[:3]
-            ) if col.top_values else "–"
+            top_str = (
+                ", ".join(f"{name} ({count})" for name, count in col.top_values[:3])
+                if col.top_values
+                else "–"
+            )
             items = [
                 col.name,
                 str(col.count),
@@ -153,6 +184,8 @@ class MetricsPanel(QWidget):
             return "–"
         if isinstance(val, float):
             if abs(val) >= 1000:
-                return f"{val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+                return (
+                    f"{val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+                )
             return f"{val:.4g}"
         return str(val)

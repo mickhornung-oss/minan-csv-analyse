@@ -47,13 +47,17 @@ class TestTransformService:
         assert "nicht gefunden" in result.message.lower()
 
     def test_filter_equal(self, sample_df):
-        condition = FilterCondition(column="Alter", operator=FilterOperator.EQUAL, value="30")
+        condition = FilterCondition(
+            column="Alter", operator=FilterOperator.EQUAL, value="30"
+        )
         result = apply_filter(sample_df, condition)
         assert result.success is True
         assert len(result.df) == 1
 
     def test_filter_greater_than(self, sample_df):
-        condition = FilterCondition(column="Alter", operator=FilterOperator.GREATER_THAN, value="30")
+        condition = FilterCondition(
+            column="Alter", operator=FilterOperator.GREATER_THAN, value="30"
+        )
         result = apply_filter(sample_df, condition)
         assert result.success is True
         assert len(result.df) == 2
@@ -70,7 +74,9 @@ class TestTransformService:
         assert len(result.df) == 2
 
     def test_filter_contains(self, sample_df):
-        condition = FilterCondition(column="Stadt", operator=FilterOperator.CONTAINS, value="er")
+        condition = FilterCondition(
+            column="Stadt", operator=FilterOperator.CONTAINS, value="er"
+        )
         result = apply_filter(sample_df, condition)
         assert result.success is True
         assert len(result.df) == 3
@@ -88,15 +94,21 @@ class TestTransformService:
         assert len(result.df) == 4
 
     def test_filter_column_not_exists(self, sample_df):
-        condition = FilterCondition(column="NichtVorhanden", operator=FilterOperator.EQUAL, value="Test")
+        condition = FilterCondition(
+            column="NichtVorhanden", operator=FilterOperator.EQUAL, value="Test"
+        )
         result = apply_filter(sample_df, condition)
         assert result.success is False
         assert "nicht gefunden" in result.message.lower()
 
     def test_apply_multiple_filters(self, sample_df):
         conditions = [
-            FilterCondition(column="Stadt", operator=FilterOperator.EQUAL, value="Berlin"),
-            FilterCondition(column="Alter", operator=FilterOperator.GREATER_THAN, value="30"),
+            FilterCondition(
+                column="Stadt", operator=FilterOperator.EQUAL, value="Berlin"
+            ),
+            FilterCondition(
+                column="Alter", operator=FilterOperator.GREATER_THAN, value="30"
+            ),
         ]
         result = apply_filters(sample_df, conditions)
         assert result.success is True
@@ -109,12 +121,18 @@ class TestTransformService:
         assert result.df["Alter"].tolist() == sorted(sample_df["Alter"].tolist())
 
     def test_sort_descending(self, sample_df):
-        result = apply_sort(sample_df.copy(), SortState(column="Alter", ascending=False))
+        result = apply_sort(
+            sample_df.copy(), SortState(column="Alter", ascending=False)
+        )
         assert result.success is True
-        assert result.df["Alter"].tolist() == sorted(sample_df["Alter"].tolist(), reverse=True)
+        assert result.df["Alter"].tolist() == sorted(
+            sample_df["Alter"].tolist(), reverse=True
+        )
 
     def test_sort_column_not_exists(self, sample_df):
-        result = apply_sort(sample_df.copy(), SortState(column="NichtVorhanden", ascending=True))
+        result = apply_sort(
+            sample_df.copy(), SortState(column="NichtVorhanden", ascending=True)
+        )
         assert result.success is False
         assert "nicht gefunden" in result.message.lower()
 

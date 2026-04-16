@@ -52,7 +52,9 @@ class ExportPanel(QWidget):
 
         csv_group = QGroupBox("CSV-Weitergabe")
         csv_layout = QVBoxLayout()
-        self._exclude_hidden_btn = QPushButton("✓ Ausgeblendete Spalten nicht exportieren")
+        self._exclude_hidden_btn = QPushButton(
+            "✓ Ausgeblendete Spalten nicht exportieren"
+        )
         self._exclude_hidden_btn.setCheckable(True)
         self._exclude_hidden_btn.setChecked(True)
         self._exclude_hidden_btn.setMinimumHeight(40)
@@ -62,7 +64,9 @@ class ExportPanel(QWidget):
             "QPushButton:!checked { background-color: #f5f5f5; color: #666; }"
         )
         csv_layout.addWidget(self._exclude_hidden_btn)
-        csv_hint = QLabel("Standardziel: output/csv im sichtbaren Hauptordner der Anwendung.")
+        csv_hint = QLabel(
+            "Standardziel: output/csv im sichtbaren Hauptordner der Anwendung."
+        )
         csv_hint.setWordWrap(True)
         csv_layout.addWidget(csv_hint)
 
@@ -115,13 +119,19 @@ class ExportPanel(QWidget):
             "Standardordner CSV: output/csv",
         ]
         if hidden_cols:
-            visible_cols = len(df.columns) - len([col for col in hidden_cols if col in df.columns])
+            visible_cols = len(df.columns) - len(
+                [col for col in hidden_cols if col in df.columns]
+            )
             info_lines.append(f"Ausgeblendete Spalten: {len(hidden_cols)}")
             info_lines.append(f"Sichtbar fuer Tabelle/CSV: {visible_cols}")
         if self._session.last_report and self._session.last_report.file_path:
-            info_lines.append(f"Letzter Bericht: {self._session.last_report.file_path.name}")
+            info_lines.append(
+                f"Letzter Bericht: {self._session.last_report.file_path.name}"
+            )
         if self._session.last_export and self._session.last_export.file_path:
-            info_lines.append(f"Letzter CSV-Export: {self._session.last_export.file_path.name}")
+            info_lines.append(
+                f"Letzter CSV-Export: {self._session.last_export.file_path.name}"
+            )
 
         self._info_label.setText("\n".join(info_lines))
 
@@ -141,8 +151,12 @@ class ExportPanel(QWidget):
             )
             return
 
-        hidden_columns = self._session.hidden_columns if self._exclude_hidden_btn.isChecked() else []
-        result = export_csv(self._session.current_df, target_path, hidden_columns=hidden_columns)
+        hidden_columns = (
+            self._session.hidden_columns if self._exclude_hidden_btn.isChecked() else []
+        )
+        result = export_csv(
+            self._session.current_df, target_path, hidden_columns=hidden_columns
+        )
         if result.success:
             self._session.last_export = result
             self._update_status(
@@ -160,7 +174,9 @@ class ExportPanel(QWidget):
             self._show_error("Keine Daten fuer einen Bericht vorhanden.")
             return
 
-        target_path = save_html_dialog(self, str(default_report_path(build_report_filename())))
+        target_path = save_html_dialog(
+            self, str(default_report_path(build_report_filename()))
+        )
         if target_path is None:
             return
 

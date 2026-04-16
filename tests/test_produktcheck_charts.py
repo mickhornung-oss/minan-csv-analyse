@@ -1,17 +1,22 @@
 """Produktcheck für Charts mit real Stresstest-Datei."""
 
-import pytest
-import pandas as pd
 from pathlib import Path
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import pandas as pd
+import pytest
+
+from minan_v1.services.chart_service import (
+    create_bar_chart,
+    create_boxplot,
+    create_correlation_heatmap,
+    create_histogram,
+    create_missing_chart,
+    get_categorical_columns,
+    get_numeric_columns,
+)
 from minan_v1.services.import_service import load_csv
 from minan_v1.services.profile_service import create_profile
-from minan_v1.services.chart_service import (
-    create_missing_chart, create_histogram, create_boxplot,
-    create_bar_chart, create_correlation_heatmap,
-    get_numeric_columns, get_categorical_columns,
-)
 
 
 class TestProduktcheckCharts:
@@ -20,7 +25,12 @@ class TestProduktcheckCharts:
     @pytest.fixture
     def stresstest_path(self):
         """Pfad zur Stresstest-Datei."""
-        path = Path(__file__).parent.parent / 'assets' / 'sample_data' / 'stresstest_5000x19.csv'
+        path = (
+            Path(__file__).parent.parent
+            / "assets"
+            / "sample_data"
+            / "stresstest_5000x19.csv"
+        )
         if not path.exists():
             pytest.skip(f"Stresstest-Datei nicht gefunden: {path}")
         return path
@@ -46,8 +56,12 @@ class TestProduktcheckCharts:
 
         # Stresstest hat bewusst Fehlwerte
         assert fig is not None
-        assert fig.get_facecolor() == (0.11764705882352941, 0.11764705882352941,
-                                        0.11764705882352941, 1.0)
+        assert fig.get_facecolor() == (
+            0.11764705882352941,
+            0.11764705882352941,
+            0.11764705882352941,
+            1.0,
+        )
 
     def test_histogram_dark_theme(self, data):
         """Histogramm hat dunkles Theme."""
@@ -83,7 +97,9 @@ class TestProduktcheckCharts:
             if unique_count > 10:
                 # Figure sollte nicht zu hoch sein (max 8-10 Kategorien)
                 height = fig.get_size_inches()[1]
-                assert height < 10, f"Bar chart height {height} zu hoch für {unique_count} Kategorien"
+                assert (
+                    height < 10
+                ), f"Bar chart height {height} zu hoch für {unique_count} Kategorien"
 
     def test_heatmap_limited_for_readability(self, data):
         """Heatmap ist auf 15x15 begrenzt für Lesbarkeit."""
@@ -129,6 +145,7 @@ class TestProduktcheckCharts:
     def test_performance_under_load(self, data):
         """Charts werden schnell erzeugt auch bei 5000 Zeilen."""
         import time
+
         df, _, profile = data
 
         numeric_cols = get_numeric_columns(profile)

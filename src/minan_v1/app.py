@@ -3,7 +3,12 @@
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 
-from minan_v1.config import APP_PRODUCT_NAME, APP_TITLE, WINDOW_MIN_HEIGHT, WINDOW_MIN_WIDTH
+from minan_v1.config import (
+    APP_PRODUCT_NAME,
+    APP_TITLE,
+    WINDOW_MIN_HEIGHT,
+    WINDOW_MIN_WIDTH,
+)
 from minan_v1.domain.session_state import SessionState
 from minan_v1.resources import ensure_runtime_dirs, icon_path
 from minan_v1.ui.main_window import MainWindow

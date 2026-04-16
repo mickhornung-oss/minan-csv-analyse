@@ -4,7 +4,14 @@ from pathlib import Path
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QAction, QIcon, QKeySequence
-from PySide6.QtWidgets import QMainWindow, QMenu, QMenuBar, QStatusBar, QTabWidget, QToolBar
+from PySide6.QtWidgets import (
+    QMainWindow,
+    QMenu,
+    QMenuBar,
+    QStatusBar,
+    QTabWidget,
+    QToolBar,
+)
 
 from minan_v1.config import APP_TITLE, APP_VERSION, SAMPLE_FILE_NAME
 from minan_v1.domain.enums import AnalysisStatus
@@ -129,7 +136,9 @@ class MainWindow(QMainWindow):
 
         toolbar.widgetForAction(open_action).setProperty("toolbarRole", "primary")
         toolbar.widgetForAction(report_action).setProperty("toolbarRole", "primary")
-        toolbar.widgetForAction(quickstart_action).setProperty("toolbarRole", "secondary")
+        toolbar.widgetForAction(quickstart_action).setProperty(
+            "toolbarRole", "secondary"
+        )
         toolbar.style().unpolish(toolbar)
         toolbar.style().polish(toolbar)
 
@@ -455,7 +464,9 @@ class MainWindow(QMainWindow):
 
     def _on_export_report(self) -> None:
         if not self._session.has_data:
-            show_error(self, "Kein Bericht moeglich", "Bitte zuerst eine CSV-Datei laden.")
+            show_error(
+                self, "Kein Bericht moeglich", "Bitte zuerst eine CSV-Datei laden."
+            )
             return
 
         default_path = str(default_report_path(build_report_filename()))

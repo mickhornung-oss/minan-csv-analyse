@@ -1,7 +1,8 @@
 """Tests für den CSV-Import-Service."""
 
-import pytest
 from pathlib import Path
+
+import pytest
 
 from minan_v1.services.import_service import load_csv
 

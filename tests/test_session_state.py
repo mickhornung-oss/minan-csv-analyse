@@ -1,7 +1,12 @@
 """Tests fuer den Session-State."""
 
 from minan_v1.domain.enums import AnalysisStatus
-from minan_v1.domain.models import FilterCondition, FilterOperator, QualityReport, SummaryResult
+from minan_v1.domain.models import (
+    FilterCondition,
+    FilterOperator,
+    QualityReport,
+    SummaryResult,
+)
 from minan_v1.domain.session_state import SessionState
 
 

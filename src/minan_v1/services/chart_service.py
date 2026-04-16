@@ -2,9 +2,10 @@
 
 from typing import Optional
 
-import pandas as pd
-import numpy as np
 import matplotlib
+import numpy as np
+import pandas as pd
+
 matplotlib.use("Agg")  # Non-interactive backend
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
@@ -17,17 +18,17 @@ from minan_v1.domain.models import DatasetProfile
 # --- Dark Theme Konfiguration ---
 def _configure_dark_theme():
     """Konfiguriert matplotlib für dunkles Theme."""
-    plt.style.use('default')
-    plt.rcParams['figure.facecolor'] = '#1e1e1e'
-    plt.rcParams['axes.facecolor'] = '#2d2d2d'
-    plt.rcParams['axes.edgecolor'] = '#3a3a3a'
-    plt.rcParams['axes.labelcolor'] = '#e0e0e0'
-    plt.rcParams['text.color'] = '#e0e0e0'
-    plt.rcParams['xtick.color'] = '#e0e0e0'
-    plt.rcParams['ytick.color'] = '#e0e0e0'
-    plt.rcParams['grid.color'] = '#3a3a3a'
-    plt.rcParams['grid.linestyle'] = '--'
-    plt.rcParams['grid.linewidth'] = 0.5
+    plt.style.use("default")
+    plt.rcParams["figure.facecolor"] = "#1e1e1e"
+    plt.rcParams["axes.facecolor"] = "#2d2d2d"
+    plt.rcParams["axes.edgecolor"] = "#3a3a3a"
+    plt.rcParams["axes.labelcolor"] = "#e0e0e0"
+    plt.rcParams["text.color"] = "#e0e0e0"
+    plt.rcParams["xtick.color"] = "#e0e0e0"
+    plt.rcParams["ytick.color"] = "#e0e0e0"
+    plt.rcParams["grid.color"] = "#3a3a3a"
+    plt.rcParams["grid.linestyle"] = "--"
+    plt.rcParams["grid.linewidth"] = 0.5
 
 
 # Wird beim Import aufgerufen
@@ -52,16 +53,23 @@ def create_missing_chart(df: pd.DataFrame) -> Optional[Figure]:
 
     # Werte an die Balken schreiben
     for bar, val in zip(bars, missing.values):
-        ax.text(bar.get_width() + 0.3, bar.get_y() + bar.get_height() / 2,
-                str(int(val)), va="center", fontsize=9, color="#e0e0e0")
+        ax.text(
+            bar.get_width() + 0.3,
+            bar.get_y() + bar.get_height() / 2,
+            str(int(val)),
+            va="center",
+            fontsize=9,
+            color="#e0e0e0",
+        )
 
     ax.grid(axis="x", alpha=0.2)
     fig.tight_layout()
     return fig
 
 
-def create_histogram(df: pd.DataFrame, column: str,
-                     bins: int = HISTOGRAM_BINS) -> Figure:
+def create_histogram(
+    df: pd.DataFrame, column: str, bins: int = HISTOGRAM_BINS
+) -> Figure:
     """Histogramm für eine numerische Spalte mit Dark Theme."""
     data = df[column].dropna()
 
@@ -88,7 +96,7 @@ def create_boxplot(df: pd.DataFrame, column: str) -> Figure:
         medianprops=dict(color="#ff6b6b", linewidth=2.5),
         whiskerprops=dict(color="#e0e0e0", linewidth=1.5),
         capprops=dict(color="#e0e0e0", linewidth=1.5),
-        flierprops=dict(marker='o', markerfacecolor='#ff6b6b', markersize=5, alpha=0.5),
+        flierprops=dict(marker="o", markerfacecolor="#ff6b6b", markersize=5, alpha=0.5),
     )
 
     # Q1, Median, Q3 Werte berechnen für Labels
@@ -103,16 +111,26 @@ def create_boxplot(df: pd.DataFrame, column: str) -> Figure:
 
     # Zusatzinfo: Q1, Median, Q3 als Text
     info_text = f"Q1: {q1:.2f} | Med: {median:.2f} | Q3: {q3:.2f}"
-    ax.text(0.5, ax.get_ylim()[0], info_text, ha='center', fontsize=8,
-            color="#b0b0b0", transform=ax.transData,
-            bbox=dict(boxstyle='round', facecolor='#2d2d2d', alpha=0.8, edgecolor='#3a3a3a'))
+    ax.text(
+        0.5,
+        ax.get_ylim()[0],
+        info_text,
+        ha="center",
+        fontsize=8,
+        color="#b0b0b0",
+        transform=ax.transData,
+        bbox=dict(
+            boxstyle="round", facecolor="#2d2d2d", alpha=0.8, edgecolor="#3a3a3a"
+        ),
+    )
 
     fig.tight_layout()
     return fig
 
 
-def create_bar_chart(df: pd.DataFrame, column: str,
-                     top_n: int = TOP_N_VALUES) -> Figure:
+def create_bar_chart(
+    df: pd.DataFrame, column: str, top_n: int = TOP_N_VALUES
+) -> Figure:
     """Balkendiagramm der Top-N häufigsten Werte einer kategorialen Spalte.
 
     Passt top_n automatisch an große Datensätze an.
@@ -130,8 +148,7 @@ def create_bar_chart(df: pd.DataFrame, column: str,
     counts = counts.head(effective_top_n)
 
     fig, ax = plt.subplots(figsize=(8, max(3, len(counts) * 0.45)))
-    bars = ax.barh(counts.index.astype(str)[::-1], counts.values[::-1],
-                   color="#52c41a")
+    bars = ax.barh(counts.index.astype(str)[::-1], counts.values[::-1], color="#52c41a")
     ax.set_xlabel("Häufigkeit", color="#e0e0e0")
     title = f"Top-{len(counts)} Werte: {column}"
     if unique_count > effective_top_n:
@@ -140,8 +157,14 @@ def create_bar_chart(df: pd.DataFrame, column: str,
 
     # Werte an die Balken schreiben
     for bar, val in zip(bars, counts.values[::-1]):
-        ax.text(bar.get_width() + 0.3, bar.get_y() + bar.get_height() / 2,
-                str(int(val)), va="center", fontsize=9, color="#e0e0e0")
+        ax.text(
+            bar.get_width() + 0.3,
+            bar.get_y() + bar.get_height() / 2,
+            str(int(val)),
+            va="center",
+            fontsize=9,
+            color="#e0e0e0",
+        )
 
     ax.grid(axis="x", alpha=0.2)
     fig.tight_layout()
@@ -166,8 +189,7 @@ def create_correlation_heatmap(df: pd.DataFrame) -> Optional[Figure]:
         selected_cols = avg_corr.head(15).index
         corr = corr.loc[selected_cols, selected_cols]
 
-    fig, ax = plt.subplots(figsize=(max(6, len(corr) * 0.9),
-                                     max(5, len(corr) * 0.8)))
+    fig, ax = plt.subplots(figsize=(max(6, len(corr) * 0.9), max(5, len(corr) * 0.8)))
     im = ax.imshow(corr.values, cmap="coolwarm", vmin=-1, vmax=1, aspect="auto")
 
     # Achsenbeschriftung mit besserer Lesbarkeit
@@ -175,8 +197,9 @@ def create_correlation_heatmap(df: pd.DataFrame) -> Optional[Figure]:
     ax.set_yticks(range(len(corr.columns)))
 
     # Spaltenname-Länge begrenzen für Lesbarkeit
-    col_labels = [name[:15] + '...' if len(name) > 15 else name
-                  for name in corr.columns]
+    col_labels = [
+        name[:15] + "..." if len(name) > 15 else name for name in corr.columns
+    ]
 
     ax.set_xticklabels(col_labels, rotation=45, ha="right", fontsize=9)
     ax.set_yticklabels(col_labels, fontsize=9)
@@ -186,8 +209,9 @@ def create_correlation_heatmap(df: pd.DataFrame) -> Optional[Figure]:
         for j in range(len(corr)):
             val = corr.iloc[i, j]
             color = "#ffffff" if abs(val) > 0.6 else "#000000"
-            ax.text(j, i, f"{val:.2f}", ha="center", va="center",
-                    fontsize=8, color=color)
+            ax.text(
+                j, i, f"{val:.2f}", ha="center", va="center", fontsize=8, color=color
+            )
 
     cbar = fig.colorbar(im, ax=ax, shrink=0.8)
     cbar.set_label("Korrelation", color="#e0e0e0")

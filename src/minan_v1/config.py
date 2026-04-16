@@ -1,7 +1,7 @@
 """Zentrale Konfiguration und portable Pfade fuer MinAn 1.4."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # --- App-Metadaten ---
 APP_NAME = "MinAn"

@@ -3,8 +3,8 @@
 from typing import Optional
 
 import pandas as pd
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QLabel, QHeaderView
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QHeaderView, QLabel, QTableView, QVBoxLayout, QWidget
 
 from minan_v1.ui.models.dataframe_table_model import DataFrameTableModel
 
@@ -72,7 +72,9 @@ class TablePanel(QWidget):
         # Ausgeblendete Spalten entfernen
         display_df = df.copy()
         if hidden_columns:
-            columns_to_drop = [col for col in hidden_columns if col in display_df.columns]
+            columns_to_drop = [
+                col for col in hidden_columns if col in display_df.columns
+            ]
             if columns_to_drop:
                 display_df = display_df.drop(columns=columns_to_drop)
 
@@ -92,11 +94,11 @@ class TablePanel(QWidget):
                 f"{len(df)} Zeilen, {visible_cols} von {total_cols} Spalten sichtbar"
             )
         else:
-            self._info_label.setText(
-                f"{len(df)} Zeilen, {total_cols} Spalten"
-            )
+            self._info_label.setText(f"{len(df)} Zeilen, {total_cols} Spalten")
 
-    def refresh_view(self, df: pd.DataFrame, duplicate_indices: Optional[list[int]] = None) -> None:
+    def refresh_view(
+        self, df: pd.DataFrame, duplicate_indices: Optional[list[int]] = None
+    ) -> None:
         """Aktualisiert die Ansicht mit dem aktuellen DataFrame.
 
         Args:

@@ -13,4 +13,4 @@ def truncate(text: str, max_length: int = 50) -> str:
     """Kürzt einen Text auf max_length Zeichen mit '...'."""
     if len(text) <= max_length:
         return text
-    return text[:max_length - 3] + "..."
+    return text[: max_length - 3] + "..."

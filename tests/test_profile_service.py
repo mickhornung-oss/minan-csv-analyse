@@ -1,10 +1,10 @@
 """Tests für den Profil-Service."""
 
-import pytest
 import pandas as pd
+import pytest
 
-from minan_v1.services.profile_service import create_profile
 from minan_v1.domain.enums import ColumnType
+from minan_v1.services.profile_service import create_profile
 
 
 class TestProfileService:

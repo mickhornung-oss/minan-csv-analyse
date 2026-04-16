@@ -28,7 +28,9 @@ def generate_summary(profile: DatasetProfile, quality: QualityReport) -> Summary
     # Hohe Fehlwertquoten - kritisch
     if quality.high_missing_columns:
         # Nur die problematischsten (~top 2)
-        top_missing = sorted(quality.high_missing_columns, key=lambda x: x[1], reverse=True)[:2]
+        top_missing = sorted(
+            quality.high_missing_columns, key=lambda x: x[1], reverse=True
+        )[:2]
         for col_name, pct in top_missing:
             quality_issues.append(f"'{col_name}': {pct}% fehlend")
 
@@ -60,7 +62,9 @@ def generate_summary(profile: DatasetProfile, quality: QualityReport) -> Summary
     if profile.total_missing > 0:
         total_cells = profile.row_count * profile.column_count
         pct = profile.total_missing / total_cells * 100 if total_cells > 0 else 0
-        lines.append(f"Fehlwerte insgesamt: {format_number(profile.total_missing, 0)} ({pct:.1f}%).")
+        lines.append(
+            f"Fehlwerte insgesamt: {format_number(profile.total_missing, 0)} ({pct:.1f}%)."
+        )
     else:
         lines.append("Keine fehlenden Werte.")
 

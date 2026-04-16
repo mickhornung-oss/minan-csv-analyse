@@ -5,6 +5,7 @@ from enum import Enum, auto
 
 class ColumnType(Enum):
     """Erkannter Spaltentyp nach Profilierung."""
+
     NUMERIC = auto()
     CATEGORICAL = auto()
     DATETIME = auto()
@@ -15,6 +16,7 @@ class ColumnType(Enum):
 
 class AnalysisStatus(Enum):
     """Status der aktuellen Analysesitzung."""
+
     EMPTY = auto()
     LOADED = auto()
     ANALYZED = auto()

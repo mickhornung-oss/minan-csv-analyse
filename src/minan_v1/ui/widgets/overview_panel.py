@@ -1,11 +1,21 @@
 """Überblick-Panel: Zeigt Erstüberblick nach CSV-Import."""
 
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QLabel, QGroupBox, QScrollArea, QFrame,
-)
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
+    QFrame,
+    QGroupBox,
+    QLabel,
+    QScrollArea,
+    QVBoxLayout,
+    QWidget,
+)
 
-from minan_v1.domain.models import DatasetProfile, ImportResult, QualityReport, SummaryResult
+from minan_v1.domain.models import (
+    DatasetProfile,
+    ImportResult,
+    QualityReport,
+    SummaryResult,
+)
 from minan_v1.utils.file_helpers import file_size_readable
 
 
@@ -40,10 +50,13 @@ class OverviewPanel(QWidget):
         scroll.setWidget(self._content)
         layout.addWidget(scroll)
 
-    def update_overview(self, import_result: ImportResult,
-                        profile: DatasetProfile,
-                        quality: QualityReport,
-                        summary: SummaryResult) -> None:
+    def update_overview(
+        self,
+        import_result: ImportResult,
+        profile: DatasetProfile,
+        quality: QualityReport,
+        summary: SummaryResult,
+    ) -> None:
         """Aktualisiert das Panel mit den Analyseergebnissen."""
         # Altes Layout leeren
         self._clear_content()
@@ -51,12 +64,15 @@ class OverviewPanel(QWidget):
         # --- Dateiinfo ---
         file_box = self._create_group("Datei")
         self._add_info(file_box, "Dateiname", import_result.file_name)
-        self._add_info(file_box, "Quelle", self._format_source_hint(import_result.file_path))
+        self._add_info(
+            file_box, "Quelle", self._format_source_hint(import_result.file_path)
+        )
         self._add_info(file_box, "Encoding", import_result.encoding)
         self._add_info(file_box, "Trennzeichen", repr(import_result.separator))
         if profile.file_size_bytes > 0:
-            self._add_info(file_box, "Dateigröße",
-                           file_size_readable(profile.file_size_bytes))
+            self._add_info(
+                file_box, "Dateigröße", file_size_readable(profile.file_size_bytes)
+            )
         self._content_layout.addWidget(file_box)
 
         # --- Struktur ---
@@ -77,28 +93,30 @@ class OverviewPanel(QWidget):
 
         # --- Qualität ---
         qual_box = self._create_group("Datenqualität")
-        self._add_info(qual_box, "Fehlende Werte gesamt",
-                       str(profile.total_missing))
-        self._add_info(qual_box, "Doppelte Zeilen",
-                       str(quality.duplicate_rows))
+        self._add_info(qual_box, "Fehlende Werte gesamt", str(profile.total_missing))
+        self._add_info(qual_box, "Doppelte Zeilen", str(quality.duplicate_rows))
         if quality.empty_columns:
-            self._add_info(qual_box, "Leere Spalten",
-                           ", ".join(quality.empty_columns))
+            self._add_info(qual_box, "Leere Spalten", ", ".join(quality.empty_columns))
         if quality.constant_columns:
-            self._add_info(qual_box, "Konstante Spalten",
-                           ", ".join(quality.constant_columns))
+            self._add_info(
+                qual_box, "Konstante Spalten", ", ".join(quality.constant_columns)
+            )
         self._content_layout.addWidget(qual_box)
 
         # --- Auffälligkeiten ---
         if quality.findings:
             # Trenne Warnungen und Hinweise
-            warnings = [f for f in quality.findings if f.severity in ["critical", "warning"]]
+            warnings = [
+                f for f in quality.findings if f.severity in ["critical", "warning"]
+            ]
             hints = [f for f in quality.findings if f.severity == "info"]
-            
+
             if warnings:
                 warnings_box = self._create_group("Warnungen")
                 for finding in warnings:
-                    icon = {"critical": "\u2716", "warning": "\u26A0"}.get(finding.severity, "")
+                    icon = {"critical": "\u2716", "warning": "\u26A0"}.get(
+                        finding.severity, ""
+                    )
                     label = QLabel(f"{icon} {finding.message}")
                     label.setWordWrap(True)
                     if finding.severity == "critical":
@@ -107,7 +125,7 @@ class OverviewPanel(QWidget):
                         label.setStyleSheet("color: #f57c00;")
                     warnings_box.layout().addWidget(label)
                 self._content_layout.addWidget(warnings_box)
-            
+
             if hints:
                 hints_box = self._create_group("Hinweise")
                 for finding in hints:

@@ -1,7 +1,7 @@
 """Zugriff auf portable Ressourcen- und Output-Pfade."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from minan_v1.config import (
     DEV_SAMPLE_DATA_DIR,

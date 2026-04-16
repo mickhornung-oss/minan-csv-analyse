@@ -24,7 +24,9 @@ def open_csv_dialog(parent: Optional[QWidget] = None) -> Optional[Path]:
     return Path(path) if path else None
 
 
-def save_csv_dialog(parent: Optional[QWidget] = None, default_path: str = "") -> Optional[Path]:
+def save_csv_dialog(
+    parent: Optional[QWidget] = None, default_path: str = ""
+) -> Optional[Path]:
     path, _ = QFileDialog.getSaveFileName(
         parent,
         "CSV-Datei speichern",
@@ -34,7 +36,9 @@ def save_csv_dialog(parent: Optional[QWidget] = None, default_path: str = "") ->
     return Path(path) if path else None
 
 
-def save_html_dialog(parent: Optional[QWidget] = None, default_path: str = "") -> Optional[Path]:
+def save_html_dialog(
+    parent: Optional[QWidget] = None, default_path: str = ""
+) -> Optional[Path]:
     path, _ = QFileDialog.getSaveFileName(
         parent,
         "HTML-Bericht speichern",

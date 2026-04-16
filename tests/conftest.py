@@ -30,51 +30,60 @@ def close_matplotlib_figures():
     """
     yield
     import matplotlib.pyplot as plt
-    plt.close('all')
+
+    plt.close("all")
 
 
 @pytest.fixture
 def sample_df() -> pd.DataFrame:
     """Einfacher Test-DataFrame mit gemischten Typen und Fehlwerten."""
-    return pd.DataFrame({
-        "ID": [1, 2, 3, 4, 5],
-        "Name": ["Alice", "Bob", "Charlie", None, "Eve"],
-        "Alter": [30, 25, 35, 28, 42],
-        "Stadt": ["Berlin", "Muenchen", "Berlin", "Hamburg", "Berlin"],
-        "Gehalt": [50000.0, 45000.0, 60000.0, None, 55000.0],
-        "Aktiv": [True, True, False, True, True],
-    })
+    return pd.DataFrame(
+        {
+            "ID": [1, 2, 3, 4, 5],
+            "Name": ["Alice", "Bob", "Charlie", None, "Eve"],
+            "Alter": [30, 25, 35, 28, 42],
+            "Stadt": ["Berlin", "Muenchen", "Berlin", "Hamburg", "Berlin"],
+            "Gehalt": [50000.0, 45000.0, 60000.0, None, 55000.0],
+            "Aktiv": [True, True, False, True, True],
+        }
+    )
 
 
 @pytest.fixture
 def df_with_duplicates() -> pd.DataFrame:
     """DataFrame mit doppelten Zeilen."""
-    return pd.DataFrame({
-        "A": [1, 2, 3, 1, 2],
-        "B": ["x", "y", "z", "x", "y"],
-    })
+    return pd.DataFrame(
+        {
+            "A": [1, 2, 3, 1, 2],
+            "B": ["x", "y", "z", "x", "y"],
+        }
+    )
 
 
 @pytest.fixture
 def df_with_problems() -> pd.DataFrame:
     """DataFrame mit diversen Qualitaetsproblemen."""
-    return pd.DataFrame({
-        "ID": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        "Leer": [None, None, None, None, None, None, None, None, None, None],
-        "Konstant": ["A", "A", "A", "A", "A", "A", "A", "A", "A", "A"],
-        "VieleFehler": [1, None, None, None, None, None, None, None, 9, 10],
-        "Normal": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-    })
+    return pd.DataFrame(
+        {
+            "ID": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Leer": [None, None, None, None, None, None, None, None, None, None],
+            "Konstant": ["A", "A", "A", "A", "A", "A", "A", "A", "A", "A"],
+            "VieleFehler": [1, None, None, None, None, None, None, None, 9, 10],
+            "Normal": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        }
+    )
 
 
 @pytest.fixture
 def df_with_outliers() -> pd.DataFrame:
     """DataFrame mit klaren Ausreisser-Kandidaten."""
-    return pd.DataFrame({
-        "ID": list(range(1, 9)),
-        "Wert": [10, 11, 12, 13, 14, 15, 16, 200],
-        "Kategorie": ["A", "A", "A", "B", "B", "B", "B", "B"],
-    })
+    return pd.DataFrame(
+        {
+            "ID": list(range(1, 9)),
+            "Wert": [10, 11, 12, 13, 14, 15, 16, 200],
+            "Kategorie": ["A", "A", "A", "B", "B", "B", "B", "B"],
+        }
+    )
 
 
 @pytest.fixture

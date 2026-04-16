@@ -46,7 +46,9 @@ class TestExportService:
 
     def test_export_all_hidden_columns(self, sample_df, tmp_path):
         export_path = tmp_path / "test_all_hidden.csv"
-        result = export_csv(sample_df.copy(), export_path, hidden_columns=sample_df.columns.tolist())
+        result = export_csv(
+            sample_df.copy(), export_path, hidden_columns=sample_df.columns.tolist()
+        )
 
         assert result.success is False
         assert "alle spalten sind ausgeblendet" in result.error.lower()
@@ -63,7 +65,9 @@ class TestExportService:
         assert set(exported_df["Stadt"].tolist()) == {"Berlin"}
         assert len(sample_df) == 5
 
-    def test_export_focus_view_keeps_original_unchanged(self, df_with_outliers, tmp_path):
+    def test_export_focus_view_keeps_original_unchanged(
+        self, df_with_outliers, tmp_path
+    ):
         export_path = tmp_path / "test_outliers.csv"
         focus_df = df_with_outliers[df_with_outliers["Wert"] == 200].copy()
         original_df = df_with_outliers.copy(deep=True)

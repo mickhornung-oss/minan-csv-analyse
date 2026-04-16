@@ -1,15 +1,20 @@
 """Tests für den Chart-Service."""
 
-import pytest
-import pandas as pd
-import numpy as np
 from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import pytest
 from matplotlib.figure import Figure
 
 from minan_v1.services.chart_service import (
-    create_missing_chart, create_histogram, create_boxplot,
-    create_bar_chart, create_correlation_heatmap,
-    get_numeric_columns, get_categorical_columns,
+    create_bar_chart,
+    create_boxplot,
+    create_correlation_heatmap,
+    create_histogram,
+    create_missing_chart,
+    get_categorical_columns,
+    get_numeric_columns,
 )
 from minan_v1.services.profile_service import create_profile
 
@@ -17,22 +22,57 @@ from minan_v1.services.profile_service import create_profile
 @pytest.fixture
 def numeric_df():
     """DataFrame mit numerischen Spalten."""
-    return pd.DataFrame({
-        "Alter": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
-        "Gehalt": [30000, 40000, 45000, 50000, 55000, 60000, 65000, 70000, 75000, 80000],
-        "Score": [3.5, 4.0, 4.2, None, 3.8, 4.5, 4.1, 3.9, 4.3, 4.0],
-    })
+    return pd.DataFrame(
+        {
+            "Alter": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
+            "Gehalt": [
+                30000,
+                40000,
+                45000,
+                50000,
+                55000,
+                60000,
+                65000,
+                70000,
+                75000,
+                80000,
+            ],
+            "Score": [3.5, 4.0, 4.2, None, 3.8, 4.5, 4.1, 3.9, 4.3, 4.0],
+        }
+    )
 
 
 @pytest.fixture
 def categorical_df():
     """DataFrame mit kategorialen Spalten."""
-    return pd.DataFrame({
-        "Stadt": ["Berlin", "München", "Hamburg", "Berlin", "Köln",
-                  "Berlin", "München", "Hamburg", "Berlin", "Köln"],
-        "Abteilung": ["IT", "IT", "Vertrieb", "Leitung", "IT",
-                      "Vertrieb", "Leitung", "IT", "Vertrieb", "IT"],
-    })
+    return pd.DataFrame(
+        {
+            "Stadt": [
+                "Berlin",
+                "München",
+                "Hamburg",
+                "Berlin",
+                "Köln",
+                "Berlin",
+                "München",
+                "Hamburg",
+                "Berlin",
+                "Köln",
+            ],
+            "Abteilung": [
+                "IT",
+                "IT",
+                "Vertrieb",
+                "Leitung",
+                "IT",
+                "Vertrieb",
+                "Leitung",
+                "IT",
+                "Vertrieb",
+                "IT",
+            ],
+        }
+    )
 
 
 @pytest.fixture
@@ -151,7 +191,12 @@ class TestStressTest:
     @pytest.fixture
     def stresstest_df(self):
         """Ladet die Stresstest-Datei."""
-        path = Path(__file__).parent.parent / 'assets' / 'sample_data' / 'stresstest_5000x19.csv'
+        path = (
+            Path(__file__).parent.parent
+            / "assets"
+            / "sample_data"
+            / "stresstest_5000x19.csv"
+        )
         if not path.exists():
             pytest.skip(f"Stresstest-Datei nicht gefunden: {path}")
         return pd.read_csv(path)
@@ -210,6 +255,7 @@ class TestStressTest:
     def test_large_dataframe_histogram_performance(self, stresstest_df):
         """Histogramm sollte bei 5000 Zeilen schnell sein."""
         import time
+
         profile = create_profile(stresstest_df)
         numeric_cols = get_numeric_columns(profile)
 
@@ -255,9 +301,10 @@ class TestDarkThemeStyle:
     def test_dark_theme_colors_applied(self):
         """Dark-Theme Farben werden auf matplotlib angewendet."""
         import matplotlib.pyplot as plt
+
         # Nach import von chart_service sollten die Farben gesetzt sein
-        assert plt.rcParams['figure.facecolor'] == '#1e1e1e'
-        assert plt.rcParams['axes.facecolor'] == '#2d2d2d'
+        assert plt.rcParams["figure.facecolor"] == "#1e1e1e"
+        assert plt.rcParams["axes.facecolor"] == "#2d2d2d"
 
     def test_histogram_respects_dark_theme(self):
         """Histogramm verwendet Dark-Theme Farben."""
@@ -265,7 +312,12 @@ class TestDarkThemeStyle:
         fig = create_histogram(df, "X")
 
         # Figure sollte mit dunklem Hintergrund erzeugt sein
-        assert fig.get_facecolor() == (0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 1.0)
+        assert fig.get_facecolor() == (
+            0.11764705882352941,
+            0.11764705882352941,
+            0.11764705882352941,
+            1.0,
+        )
         # (hex #1e1e1e in RGB normalized)
 
     def test_boxplot_q1_q3_labels_visible(self):
