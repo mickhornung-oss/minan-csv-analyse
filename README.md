@@ -1,76 +1,81 @@
-# MinAn 1.4 - CSV-Schnellanalyse
+# MinAn 1.4 — CSV Quick Analysis
 
-Lokales, portables Windows-Desktop-Tool zur schnellen Analyse von CSV-Dateien.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Tests](https://github.com/mickhornung-oss/minan-csv-analyse/actions/workflows/python-tests.yml/badge.svg)](https://github.com/mickhornung-oss/minan-csv-analyse/actions)
+[![codecov](https://codecov.io/gh/mickhornung-oss/minan-csv-analyse/branch/main/graph/badge.svg)](https://codecov.io/gh/mickhornung-oss/minan-csv-analyse)
 
-## Projektziel
+Portable Windows desktop tool for rapid CSV analysis — load a file, get an instant structural profile, data quality report, charts, filtered views, and an HTML export. The original file is never modified.
 
-MinAn 1.4 laedt CSV-Dateien per Klick und liefert einen strukturierten Ueberblick: Strukturprofil, Datenqualitaet, Kennzahlen, Diagramme, Arbeitsansicht mit Filtern und Schnellansichten sowie lokale Weitergabe per CSV und HTML-Bericht. Die Originaldatei bleibt unveraendert.
+> **Deutsch:** Portables Windows-Desktop-Tool zur schnellen CSV-Analyse mit Strukturprofil, Datenqualitaet, Diagrammen und lokalem HTML-Bericht.
 
-## Stand 1.4
+## 📸 Demo
 
-- CSV laden und direkt analysieren
-- Arbeitsansicht mit Mehrfachfiltern, Schnellansichten und Typuebersteuerung
-- Export der aktiven Sicht als neue CSV-Datei
-- Lokaler HTML-Analysebericht aus der aktiven Sicht
-- Info-/Schnellstart-Zugang mit Button fuer die mitgelieferte Beispieldatei
-- Portable Release-Struktur mit `output` im Hauptordner und Beispieldatei unter `_internal/sample_data`
-- Konsolidierter Build-/Release-Pfad auf `dist/MinAn_1_4`
-- Aktueller Teststand: `155 passed` (lokal mit `pytest -q`)
+<!-- Add a screenshot here: images/minan-demo.png -->
+*Arbeitsansicht mit Filtern, Schnellansichten und Diagrammen.*
 
-## Portable Release-Struktur
+## Features
 
-```text
-dist/MinAn_1_4/
-|- MinAn.exe
-|- _internal/
-|  `- sample_data/
-|     `- test_csv_deutsch_200x15.csv
-|- output/
-|  |- reports/
-|  `- csv/
-|- README_Kurzstart.txt
-`- README.md
-```
+| Feature | Details |
+|---|---|
+| CSV Loading | Auto-detects encoding and separator |
+| Structural Profile | Column types, missing values, cardinality |
+| Data Quality Report | Duplicates, empty columns, high-missing detection |
+| Charts | Histograms, bar charts, distribution plots |
+| Filtered Views | Multi-filter with type overrides |
+| CSV Export | Export the active filtered view |
+| HTML Report | Local analysis report from active view |
+| Portable Build | Single `.exe`, no installation required |
 
-## Schnellstart
-
-- `CSV oeffnen` fuer eigene Dateien
-- `Info / Schnellstart` fuer kurze Nutzungshinweise
-- `Beispieldatei laden` direkt aus `_internal/sample_data`
-- HTML-Berichte landen standardmaessig in `output/reports`
-- CSV-Exporte landen standardmaessig in `output/csv`
-
-## Start im Dev-Modus
+## Quick Start (Dev Mode)
 
 ```batch
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Run the app
 run_dev.bat
 ```
 
-Voraussetzung:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Release bauen
+## Build Portable Release
 
 ```batch
 build_release.bat
 ```
 
-Das Ergebnis liegt in `dist/MinAn_1_4/` und ist direkt portable nutzbar.
+Output in `dist/MinAn_1_4/MinAn.exe` — portable, no Python installation needed.
 
-## Projektinterne Hilfsskripte
+## Tech Stack
 
-- Produktcheck- und Analysehilfen liegen unter `scripts/` (siehe `scripts/README.md`).
-- Praesentationsskripte liegen unter `scripts/presentation/` und sind interne Begleitwerkzeuge (nicht Laufzeitkern).
+- **Python** 3.10+
+- **PySide6** — desktop GUI
+- **pandas** — data processing
+- **matplotlib** — charts
+- **PyInstaller** — portable build
 
-## Produktnahe Smoke-Absicherung
+## Tests
 
-- GUI-Hauptpfad (offscreen): `tests/test_product_smoke_gui.py`
-- Deckt den Fluss Laden -> Tabs -> aktive Sicht -> CSV-Export -> HTML-Report ab.
+```bash
+pytest tests/ -v
+# 155 tests passing
+```
 
-## Version
+Test coverage includes:
+- Service unit tests (profile, quality, chart, export, report, transform)
+- GUI smoke tests (offscreen, full user flow)
+- Stress tests for type detection consistency
 
-- Release-Version: `1.4`
-- Fokus: produktive Schnellstartfuehrung, portable Release-Ordnerlogik und lokaler HTML-Bericht
+## Project Structure
+
+```
+src/minan_v1/
+├── domain/         # Data models and enums (dataclasses)
+├── services/       # Business logic — one service per concern
+└── ui/             # PySide6 UI components
+
+tests/              # 17 test files, 155 tests
+```
+
+## Topics
+
+`python` `gui` `pandas` `data-analysis` `csv` `data-visualization` `desktop-application` `pyside6`
