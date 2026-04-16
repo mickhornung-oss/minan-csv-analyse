@@ -80,4 +80,39 @@ jobs:
       env:
         QT_QPA_PLATFORM: offscreen
       run: |
-        pytest tests/ --cov=src --cov-report=xml -v || pytest tests/ -v
+        set -o pipefail
+        pytest tests/ --cov=src --cov-report=xml -v 2>&1 | tee pytest-output.txt
+        status=${PIPESTATUS[0]}
+        if [ "$status" -ne 0 ]; then
+          pytest tests/ -v 2>&1 | tee -a pytest-output.txt
+          status=${PIPESTATUS[0]}
+        fi
+        exit "$status"
+
+    - name: Summarize test failure
+      if: failure()
+      run: |
+        python - <<'PY'
+        from pathlib import Path
+
+        output_path = Path("pytest-output.txt")
+        if not output_path.exists():
+            print("::error title=pytest-failure::pytest-output.txt missing")
+            raise SystemExit(0)
+
+        text = output_path.read_text(encoding="utf-8", errors="replace")
+        interesting = []
+        for line in text.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            if line.startswith("ERROR ") or " FAILED" in line or line.startswith("FAILED "):
+                interesting.append(line)
+            elif line.startswith("E   "):
+                interesting.append(line)
+            elif "pytest: error:" in line:
+                interesting.append(line)
+
+        message = " | ".join(interesting[:8])[:1500] if interesting else "Tests failed; inspect pytest-output.txt"
+        print(f"::error title=pytest-failure::{message}")
+        PY
