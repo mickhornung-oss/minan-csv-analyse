@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
-Erstelle professionelle Abschlusspräsentation für MinAn 1.4
+Erstelle professionelle AbschlussprÃ¤sentation fÃ¼r MinAn 1.4
 """
 
 from pptx import Presentation
@@ -12,22 +12,22 @@ from pathlib import Path
 # Farben
 COLOR_DARK_BG = RGBColor(25, 35, 40)
 COLOR_DARK_PANEL = RGBColor(35, 50, 60)
-COLOR_GREEN_ACCENT = RGBColor(76, 175, 80)  # Grün
+COLOR_GREEN_ACCENT = RGBColor(76, 175, 80)  # GrÃ¼n
 COLOR_LIGHT_TEXT = RGBColor(230, 235, 240)
 COLOR_GRAY_TEXT = RGBColor(150, 160, 170)
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 ASSETS_DIR = PROJECT_ROOT / "assets"
 ICON_PATH = ASSETS_DIR / "icons" / "minan_v1.png"
 RELEASE_SCREENSHOT = PROJECT_ROOT / "docs" / "release_assets" / "MinAn_1_4_Release_Screenshot.png"
 
-# PowerPoint-Präsentation
+# PowerPoint-PrÃ¤sentation
 prs = Presentation()
 prs.slide_width = Inches(10)
 prs.slide_height = Inches(7.5)
 
 def add_title_slide(title, subtitle=""):
-    """Titelfolie mit dunkel/grün Design"""
+    """Titelfolie mit dunkel/grÃ¼n Design"""
     slide = prs.slides.add_slide(prs.slide_layouts[6])  # Blank layout
 
     # Dunkler Hintergrund
@@ -86,7 +86,7 @@ def add_content_slide(title, content_points=None, image_path=None):
         paragraph.font.bold = True
         paragraph.font.color.rgb = COLOR_GREEN_ACCENT
 
-    # Grüne Trennlinie
+    # GrÃ¼ne Trennlinie
     line = slide.shapes.add_connector(1, Inches(0.5), Inches(1.1), Inches(9.5), Inches(1.1))
     line.line.color.rgb = COLOR_GREEN_ACCENT
     line.line.width = Pt(2)
@@ -140,7 +140,7 @@ def add_two_column_slide(title, left_content, right_content):
         paragraph.font.bold = True
         paragraph.font.color.rgb = COLOR_GREEN_ACCENT
 
-    # Grüne Trennlinie
+    # GrÃ¼ne Trennlinie
     line = slide.shapes.add_connector(1, Inches(0.5), Inches(1.1), Inches(9.5), Inches(1.1))
     line.line.color.rgb = COLOR_GREEN_ACCENT
     line.line.width = Pt(2)
@@ -205,12 +205,12 @@ add_title_slide(
 add_content_slide(
     "Ausgangslage",
     [
-        "• Manuelle CSV-Erstanalyse ist zeitintensiv",
-        "• Unstrukturierter Überblick: Struktur, Qualität, Ausreißer",
-        "• Keine lokale, portable Lösung ohne Installation",
-        "• Cloud-Abhängigkeit oft nicht gewünscht",
-        "• Originaldatei muss geschützt sein",
-        "→ Lösung: Schneller, lokaler, offline Überblick"
+        "â€¢ Manuelle CSV-Erstanalyse ist zeitintensiv",
+        "â€¢ Unstrukturierter Ãœberblick: Struktur, QualitÃ¤t, AusreiÃŸer",
+        "â€¢ Keine lokale, portable LÃ¶sung ohne Installation",
+        "â€¢ Cloud-AbhÃ¤ngigkeit oft nicht gewÃ¼nscht",
+        "â€¢ Originaldatei muss geschÃ¼tzt sein",
+        "â†’ LÃ¶sung: Schneller, lokaler, offline Ãœberblick"
     ]
 )
 
@@ -218,12 +218,12 @@ add_content_slide(
 add_content_slide(
     "Produktziel",
     [
-        "✓ Schneller Überblick ohne Setup",
-        "✓ Vollständig portabel und lokal",
-        "✓ Originaldatei geschützt",
-        "✓ Arbeitsfluss für Analysten: Laden → Prüfen → Bearbeiten → Export",
-        "✓ Fokus auf Fachlichkeit, nicht Komplexität",
-        "✓ Windows-nativer Desktop-Workflow"
+        "âœ“ Schneller Ãœberblick ohne Setup",
+        "âœ“ VollstÃ¤ndig portabel und lokal",
+        "âœ“ Originaldatei geschÃ¼tzt",
+        "âœ“ Arbeitsfluss fÃ¼r Analysten: Laden â†’ PrÃ¼fen â†’ Bearbeiten â†’ Export",
+        "âœ“ Fokus auf Fachlichkeit, nicht KomplexitÃ¤t",
+        "âœ“ Windows-nativer Desktop-Workflow"
     ]
 )
 
@@ -232,18 +232,18 @@ add_content_slide(
     "Funktionsumfang",
     [
         "CSV-Verwaltung:",
-        "  • CSV laden mit automatischer Encoding/Separator-Erkennung",
-        "  • Beispieldatei (Schnellstart)",
+        "  â€¢ CSV laden mit automatischer Encoding/Separator-Erkennung",
+        "  â€¢ Beispieldatei (Schnellstart)",
         "",
         "Analyse & Vorschau:",
-        "  • Strukturprofil und Datenqualität",
-        "  • Kennzahlen und Diagramme",
-        "  • Tabellenansicht mit Scrolling",
+        "  â€¢ Strukturprofil und DatenqualitÃ¤t",
+        "  â€¢ Kennzahlen und Diagramme",
+        "  â€¢ Tabellenansicht mit Scrolling",
         "",
         "Arbeitstools:",
-        "  • Mehrfach-Filter, Schnellansichten",
-        "  • Spalten-Bearbeitung (Umbenennen, Löschen, Typ-Overrides)",
-        "  • CSV-Export & HTML-Bericht (aktive Sicht)"
+        "  â€¢ Mehrfach-Filter, Schnellansichten",
+        "  â€¢ Spalten-Bearbeitung (Umbenennen, LÃ¶schen, Typ-Overrides)",
+        "  â€¢ CSV-Export & HTML-Bericht (aktive Sicht)"
     ]
 )
 
@@ -251,24 +251,24 @@ add_content_slide(
 add_content_slide(
     "Produktlogik & Schutzkonzept",
     [
-        "Originaldatei → Arbeitskopie",
-        "  • Originaldatei wird beim Laden gespeichert",
-        "  • Alle Änderungen nur auf Arbeitskopie",
+        "Originaldatei â†’ Arbeitskopie",
+        "  â€¢ Originaldatei wird beim Laden gespeichert",
+        "  â€¢ Alle Ã„nderungen nur auf Arbeitskopie",
         "",
         "Aktive Sicht",
-        "  • Filter und Transformationen definieren aktive Sicht",
-        "  • Kennzahlen, Diagramme, Export beziehen sich auf aktive Sicht",
+        "  â€¢ Filter und Transformationen definieren aktive Sicht",
+        "  â€¢ Kennzahlen, Diagramme, Export beziehen sich auf aktive Sicht",
         "",
         "Export & Bericht",
-        "  • CSV-Export speichert aktive Sicht als neue Datei",
-        "  • HTML-Bericht dokumentiert aktive Sicht",
+        "  â€¢ CSV-Export speichert aktive Sicht als neue Datei",
+        "  â€¢ HTML-Bericht dokumentiert aktive Sicht",
         "",
         "Schutz",
-        "  • Originaldatei wird nie verändert oder überschrieben"
+        "  â€¢ Originaldatei wird nie verÃ¤ndert oder Ã¼berschrieben"
     ]
 )
 
-# 6. OBERFLÄCHE / PRODUKTANSICHT
+# 6. OBERFLÃ„CHE / PRODUKTANSICHT
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 background = slide.background
 fill = background.fill
@@ -277,7 +277,7 @@ fill.fore_color.rgb = COLOR_DARK_BG
 
 title_box = slide.shapes.add_textbox(Inches(0.5), Inches(0.3), Inches(9), Inches(0.7))
 title_frame = title_box.text_frame
-title_frame.text = "Produktoberfläche"
+title_frame.text = "ProduktoberflÃ¤che"
 for paragraph in title_frame.paragraphs:
     paragraph.font.size = Pt(40)
     paragraph.font.bold = True
@@ -295,7 +295,7 @@ if RELEASE_SCREENSHOT.exists():
         # Fallback: Text
         text_box = slide.shapes.add_textbox(Inches(1), Inches(2), Inches(8), Inches(4))
         tf = text_box.text_frame
-        tf.text = "• Toolbar: CSV öffnen, Bericht exportieren, Info/Schnellstart\n• Tabs: Überblick, Kennzahlen, Diagramme, Tabelle, Bearbeiten, Export\n• Dunkles ModernDesign mit grünen Akzenten\n• Responsive Layouts für große und kleine Dateien"
+        tf.text = "â€¢ Toolbar: CSV Ã¶ffnen, Bericht exportieren, Info/Schnellstart\nâ€¢ Tabs: Ãœberblick, Kennzahlen, Diagramme, Tabelle, Bearbeiten, Export\nâ€¢ Dunkles ModernDesign mit grÃ¼nen Akzenten\nâ€¢ Responsive Layouts fÃ¼r groÃŸe und kleine Dateien"
         for paragraph in tf.paragraphs:
             paragraph.font.size = Pt(18)
             paragraph.font.color.rgb = COLOR_LIGHT_TEXT
@@ -308,7 +308,7 @@ add_content_slide(
         "  Python 3.10+",
         "",
         ("UI-Framework", True),
-        "  PySide6 (Qt6 für Python)",
+        "  PySide6 (Qt6 fÃ¼r Python)",
         "",
         ("Datenverwaltung", True),
         "  pandas (DataFrames, Analyse)",
@@ -317,7 +317,7 @@ add_content_slide(
         ("Visualisierung", True),
         "  matplotlib (Diagramme, Charts)",
         "",
-        ("Qualitätssicherung", True),
+        ("QualitÃ¤tssicherung", True),
         "  pytest (automatisierte Tests)"
     ]
 )
@@ -328,13 +328,13 @@ add_content_slide(
     [
         ("Packaging", True),
         "  PyInstaller One-Folder-Release",
-        "  → MinAn_1_4/ Ordner (portable)",
+        "  â†’ MinAn_1_4/ Ordner (portable)",
         "",
         ("Release-Struktur", True),
-        "  ├ MinAn.exe (Hauptanwendung)",
-        "  ├ _internal/ (Python Runtime, Libraries)",
-        "  ├ output/ (Berichte und CSV-Exporte)",
-        "  └ _internal/sample_data/ (Beispieldatei)",
+        "  â”œ MinAn.exe (Hauptanwendung)",
+        "  â”œ _internal/ (Python Runtime, Libraries)",
+        "  â”œ output/ (Berichte und CSV-Exporte)",
+        "  â”” _internal/sample_data/ (Beispieldatei)",
         "",
         ("Versionierung", True),
         "  Windows Version Info: 1.4.0.0",
@@ -374,42 +374,42 @@ add_two_column_slide(
     ]
 )
 
-# 10. QUALITÄTSSICHERUNG
+# 10. QUALITÃ„TSSICHERUNG
 add_content_slide(
-    "Qualitätssicherung",
+    "QualitÃ¤tssicherung",
     [
         ("Automatisierte Tests", True),
         "  44+ Pytest-Tests abdecken:",
-        "  • CSV-Import mit verschiedenen Encodings",
-        "  • Profilierung (Zeilen, Spalten, Typen)",
-        "  • Datenqualität (Missing, Dubletten)",
-        "  • Transformationen (Filter, Markierungen)",
-        "  • Export und Bericht-Generierung",
-        "  • Originalschutz und Session-State",
+        "  â€¢ CSV-Import mit verschiedenen Encodings",
+        "  â€¢ Profilierung (Zeilen, Spalten, Typen)",
+        "  â€¢ DatenqualitÃ¤t (Missing, Dubletten)",
+        "  â€¢ Transformationen (Filter, Markierungen)",
+        "  â€¢ Export und Bericht-Generierung",
+        "  â€¢ Originalschutz und Session-State",
         "",
         ("Manuelle Smoke-Tests", True),
-        "  ✓ App startet und lädt Dateien",
-        "  ✓ Alle Tabs funktionieren",
-        "  ✓ Export und Bericht-Generierung"
+        "  âœ“ App startet und lÃ¤dt Dateien",
+        "  âœ“ Alle Tabs funktionieren",
+        "  âœ“ Export und Bericht-Generierung"
     ]
 )
 
-# 11. RELEASE & PORTABILITÄT
+# 11. RELEASE & PORTABILITÃ„T
 add_content_slide(
-    "Release & Portabilität",
+    "Release & PortabilitÃ¤t",
     [
         ("One-Folder-Prinzip", True),
-        "  dist/MinAn_1_4/ ist vollständig portabel",
+        "  dist/MinAn_1_4/ ist vollstÃ¤ndig portabel",
         "  Keine Systeminstallation erforderlich",
         "",
         ("Ausgabeordner", True),
-        "  output/reports/ → HTML-Berichte",
-        "  output/csv/ → CSV-Exporte",
+        "  output/reports/ â†’ HTML-Berichte",
+        "  output/csv/ â†’ CSV-Exporte",
         "",
         ("Beispieldatei", True),
         "  test_csv_deutsch_200x15.csv",
         "  200 Zeilen, 15 Spalten, deutsch",
-        "  → Schnellstart und Demo",
+        "  â†’ Schnellstart und Demo",
         "",
         ("Schnellstart", True),
         "  Info-Dialog mit Beispieldatei-Button"
@@ -421,20 +421,20 @@ add_content_slide(
     "Produktreife - Feinschliff",
     [
         ("UI/UX Politur", True),
-        "  ✓ Dark Mode mit grünen Akzenten",
-        "  ✓ Responsive Layouts",
-        "  ✓ Klare, konsistente Toolbar",
-        "  ✓ Info-Dialog und Schnellstart",
+        "  âœ“ Dark Mode mit grÃ¼nen Akzenten",
+        "  âœ“ Responsive Layouts",
+        "  âœ“ Klare, konsistente Toolbar",
+        "  âœ“ Info-Dialog und Schnellstart",
         "",
         ("Produktmetadaten", True),
-        "  ✓ Produktname: MinAn 1.4 - CSV-Schnellanalyse",
-        "  ✓ Company: MinAn Software",
-        "  ✓ Icon: ModernGreen Analyse-Symbol",
+        "  âœ“ Produktname: MinAn 1.4 - CSV-Schnellanalyse",
+        "  âœ“ Company: MinAn Software",
+        "  âœ“ Icon: ModernGreen Analyse-Symbol",
         "",
         ("Fertigstellung 1.4", True),
-        "  ✓ Alle Tests grün",
-        "  ✓ Release-Build erfolgreich",
-        "  ✓ Portable EXE lauffähig"
+        "  âœ“ Alle Tests grÃ¼n",
+        "  âœ“ Release-Build erfolgreich",
+        "  âœ“ Portable EXE lauffÃ¤hig"
     ]
 )
 
@@ -443,26 +443,27 @@ add_content_slide(
     "Fazit",
     [
         ("Was ist MinAn 1.4?", True),
-        "Ein reifes, produktives Analysewerkzeug für CSV-Daten",
+        "Ein reifes, produktives Analysewerkzeug fÃ¼r CSV-Daten",
         "",
-        ("Kernstärken", True),
-        "  ✓ Lokal, portabel, sicher",
-        "  ✓ Schneller Überblick ohne Setup",
-        "  ✓ Originalschutz durch Arbeitskopien-Prinzip",
-        "  ✓ Professioneller Export und Bericht",
-        "  ✓ Solide Test-Basis und Release-Qualität",
+        ("KernstÃ¤rken", True),
+        "  âœ“ Lokal, portabel, sicher",
+        "  âœ“ Schneller Ãœberblick ohne Setup",
+        "  âœ“ Originalschutz durch Arbeitskopien-Prinzip",
+        "  âœ“ Professioneller Export und Bericht",
+        "  âœ“ Solide Test-Basis und Release-QualitÃ¤t",
         "",
         ("Projektstand", True),
-        "  ✓ Version 1.4 ist Abschluss von Blocks 1–2",
-        "  ✓ Produktionsreifer Stand",
-        "  ✓ Bereit für Einsatz und Weiterentwicklung"
+        "  âœ“ Version 1.4 ist Abschluss von Blocks 1â€“2",
+        "  âœ“ Produktionsreifer Stand",
+        "  âœ“ Bereit fÃ¼r Einsatz und Weiterentwicklung"
     ]
 )
 
 # SPEICHERN
-output_path = PROJECT_ROOT / "presentation" / "MinAn_1_4_Abschlusspraesentation.pptx"
+output_path = PROJECT_ROOT / "docs" / "internal" / "presentation" / "MinAn_1_4_Abschlusspraesentation.pptx"
 output_path.parent.mkdir(parents=True, exist_ok=True)
 prs.save(str(output_path))
 
-print(f"[OK] Präsentation erstellt: {output_path}")
+print(f"[OK] PrÃ¤sentation erstellt: {output_path}")
 print(f"[OK] Folien: {len(prs.slides)}")
+

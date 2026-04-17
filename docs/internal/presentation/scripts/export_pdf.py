@@ -1,12 +1,12 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Exportiert die aktuelle Praesentation nach PDF via PowerPoint COM."""
 
 import sys
 from pathlib import Path
 
-project_root = Path(__file__).resolve().parents[2]
-pptx_path = project_root / "presentation" / "MinAn_1_4_Abschlusspraesentation.pptx"
-pdf_path = project_root / "presentation" / "MinAn_1_4_Abschlusspraesentation.pdf"
+project_root = Path(__file__).resolve().parents[4]
+pptx_path = project_root / "docs" / "internal" / "presentation" / "MinAn_1_4_Abschlusspraesentation.pptx"
+pdf_path = project_root / "docs" / "internal" / "presentation" / "MinAn_1_4_Abschlusspraesentation.pdf"
 
 if not pptx_path.exists():
     print(f"[ERROR] {pptx_path} nicht gefunden")
@@ -29,3 +29,4 @@ try:
 except Exception as exc:
     print(f"[ERROR] PowerPoint-Export fehlgeschlagen: {exc}")
     sys.exit(1)
+

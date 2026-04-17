@@ -1,44 +1,46 @@
-# Python
+﻿# Python cache and tooling
 __pycache__/
 *.py[cod]
-*.pyo
-*.egg-info/
-dist/
-*.egg
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
 
-# Virtual Environment
-venv/
+# Virtual environments
 .venv/
+venv/
 env/
 
-# PyInstaller
-build/dist/
-build/*.exe
+# Build and packaging artifacts (generated)
+build/
+dist/
 *.manifest
 *.spec.bak
 
-# IDE
+# Runtime/generated outputs
+output/
+
+# Editor and local settings
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# OS-specific noise
 Thumbs.db
 Desktop.ini
 .DS_Store
 
-# Projekt-spezifisch
-*.log
-*.tmp
-
-# Claude
+# Local assistant config
 .claude/
 
-# pytest
-.pytest_cache/
-
-# Generierte Outputs
-output/reports/
-output/csv/
+# Generic temporary files
+*.log
+*.tmp

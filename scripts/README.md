@@ -9,11 +9,11 @@
 Diese Skripte pruefen Analyse-/Qualitaets-/Chartpfade mit realen Sampledaten.
 
 ## Interne Begleitskripte (nicht Produktkern)
-- `presentation/*`
+- `docs/internal/presentation/scripts/*`
 
 Diese Skripte erzeugen Praesentationsmaterialien (PPTX/PDF, Screenshots) und sind
 nicht Teil des App-Laufzeitkerns.
 
 ## Legacy-Hinweis
-- In `presentation/*` existieren historisch gewachsene Skripte mit teils aelteren
+- In `docs/internal/presentation/scripts/*` existieren historisch gewachsene Skripte mit teils aelteren
   Texten/Layouts. Sie sind bewusst als interne Nebenwerkzeuge eingeordnet.

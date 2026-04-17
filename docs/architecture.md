@@ -1,61 +1,15 @@
-# Architektur - MinAn 1.4
+﻿# Architecture
 
-## Grundprinzip
+## Layered Design
 
-MinAn 1.4 folgt einer klaren Schichtentrennung: Die UI-Schicht ist von der Fachlogik getrennt. Services kapseln alle fachlichen Operationen. Der Session-State ist der zentrale Datenhaltungspunkt.
+MinAn follows a pragmatic layered design:
 
-## Moduluebersicht
+- `ui/`: desktop presentation layer (PySide6)
+- `services/`: business/application logic
+- `domain/`: session and model definitions
+- `utils/`: supporting helpers without business ownership
 
-### domain/
-
-Enthaelt die Kernmodelle der Anwendung:
-
-- `session_state.py`: Zentrale Sitzungsverwaltung. Haelt Original-DataFrame und Arbeitskopie strikt getrennt.
-- `models.py`: Datenklassen fuer Spaltenprofile, Datensatzprofile und Exportergebnisse.
-- `enums.py`: Typen und Statuswerte.
-
-### services/
-
-Kapseln die Fachlogik unabhaengig von der UI:
-
-- `import_service.py`: CSV laden mit Encoding- und Separator-Erkennung.
-- `profile_service.py`: Strukturprofil erstellen.
-- `quality_service.py`: Datenqualitaetspruefung.
-- `chart_service.py`: Standarddiagramme erzeugen.
-- `summary_service.py`: Textzusammenfassung erzeugen.
-- `transform_service.py`: Bearbeitungen auf der Arbeitskopie.
-- `export_service.py`: CSV-Export der aktiven Sicht.
-- `report_service.py`: HTML-Bericht der aktiven Sicht.
-
-### ui/
-
-PySide6-basierte Desktop-Oberflaeche:
-
-- `main_window.py`: Hauptfenster mit Toolbar und Tab-Navigation.
-- `dialogs.py`: Datei-Dialoge, Hinweise und Schnellstart.
-- `widgets/`: Einzelne Panels fuer Ueberblick, Tabelle, Kennzahlen, Diagramme, Bearbeiten und Export.
-- `models/`: Qt-Table-Model-Adapter fuer pandas DataFrames.
-
-### utils/
-
-Hilfsfunktionen ohne Fachlogik:
-
-- `csv_sniffer.py`
-- `file_helpers.py`
-- `text_helpers.py`
-- `validators.py`
-
-## Session-State-Konzept
-
-Der `SessionState` ist das Zentrum der Datenhaltung:
-
-1. Beim Laden wird der Original-DataFrame gespeichert und eine Arbeitskopie erzeugt.
-2. Alle Analysen und Bearbeitungen laufen auf der Arbeitskopie.
-3. Das Original bleibt unangetastet.
-4. Exporte schreiben immer neue Dateien.
-5. Ruecksetzen stellt den Originalzustand wieder her.
-
-## Abhaengigkeitsrichtung
+Dependency direction:
 
 ```text
 UI -> Services -> Domain
@@ -63,8 +17,38 @@ UI -> Utils
 Services -> Utils
 ```
 
-Services kennen keine UI. Die UI ruft Services auf und stellt Ergebnisse dar.
+Services do not depend on UI widgets.
 
-## Konfiguration
+## Core Runtime Model
 
-Zentrale Konstanten fuer Produktname, Version, Defaults und portable Pfade liegen in `config.py`. Harte Benutzerpfade werden vermieden.
+`SessionState` is the runtime center:
+
+- keeps `original_df` (source snapshot)
+- keeps `working_df` (editable copy)
+- builds `current_df` (active filtered/quick-view state)
+- stores profile, quality report, summary, and last export/report metadata
+
+## Data Safety Model
+
+- Source CSV is read-only from workflow perspective
+- All edits are applied to working copy
+- Exports generate new files
+- Overwriting source file is blocked by export/report services
+
+## Main Modules
+
+- `services/import_service.py`: CSV loading and detection
+- `services/profile_service.py`: structural profiling
+- `services/quality_service.py`: quality findings
+- `services/transform_service.py`: edit/filter helpers
+- `services/export_service.py`: CSV export
+- `services/report_service.py`: HTML reporting
+- `ui/main_window.py`: main interaction shell
+
+## Runtime Paths
+
+Path behavior is centralized in `src/minan_v1/resources.py` and `src/minan_v1/config.py`.
+
+- Dev mode: project-root relative paths
+- Frozen mode: executable-root relative paths
+- Runtime folders are ensured before operations (`output/reports`, `output/csv`)

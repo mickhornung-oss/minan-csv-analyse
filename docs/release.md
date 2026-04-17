@@ -1,48 +1,44 @@
-# Release - MinAn 1.4
+# Release Notes - v1.4.0
 
-## Release-Konzept
+Release date: 2026-04-17  
+Release scope: local Windows desktop mini-tool
 
-MinAn 1.4 wird als portables Windows-Desktop-Tool ausgeliefert. Es ist keine Installation notwendig.
+## What This Release Is
 
-## One-Folder-Release
+`v1.4.0` is the first fully consolidated public repository baseline after repository cleanup, documentation consolidation, packaging hardening, and technical quality-gate/CI baseline work.
 
-```text
-dist/MinAn_1_4/
-|- MinAn.exe
-|- _internal/
-|  `- sample_data/
-|     `- test_csv_deutsch_200x15.csv
-|- output/
-|  |- reports/
-|  `- csv/
-`- README_Kurzstart.txt
-```
+## Included
 
-## Bedeutung der Ordner
+- stable local CSV analysis desktop workflow
+- active-view filtering/editing and CSV/HTML export
+- reproducible Windows packaging entrypoint (`build_release.bat`)
+- portable release layout at `dist/MinAn_1_4/`
+- consolidated quality gates via `python scripts/quality_gates.py`
+- minimal CI baseline in `.github/workflows/ci.yml`
 
-- `MinAn.exe`: Startdatei
-- `_internal`: reine Runtime- und Technikdateien
-- `_internal/sample_data`: interner Bereich fuer die mitgelieferte Beispieldatei
-- `output/reports`: Standardziel fuer HTML-Berichte
-- `output/csv`: Standardziel fuer CSV-Exporte
-- `README_Kurzstart.txt`: kompakte Einstiegshilfe direkt neben der EXE
+## Explicitly Not Included
 
-## Build-Prozess
+- hosted web deployment/demo
+- automated GitHub release artifact publishing
+- cross-platform packaging target (non-Windows)
 
-```batch
-build_release.bat
-```
+## Release Build Output
 
-Der Build bindet ein:
+Primary executable:
 
-- `README_Kurzstart.txt`
+- `dist/MinAn_1_4/MinAn.exe`
+
+Required runtime contents:
+
 - `_internal/sample_data/test_csv_deutsch_200x15.csv`
+- `output/reports/`
+- `output/csv/`
+- `README.md`
+- `README_Kurzstart.txt`
 
-Die Output-Ordner werden beim Start oder bei erster Nutzung sichergestellt.
+## Validation Reference (local)
 
-## Portabilitaet
+- baseline quality gates: `python scripts/quality_gates.py`
+- full packaging + smoke gate: `python scripts/quality_gates.py --with-build --with-exe-smoke`
 
-- keine Nutzdaten in `_internal`
-- keine stillen Benutzerverzeichnisse
-- keine Abhaengigkeit von `tests\...` im Release
-- alle relevanten Pfade relativ zum EXE-Ordner
+See [`release_checklist.md`](release_checklist.md) for the formal acceptance gate.

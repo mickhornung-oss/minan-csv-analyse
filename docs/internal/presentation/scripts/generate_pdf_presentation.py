@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-MinAn V1 PDF-Präsentation Generator mit ReportLab
+MinAn V1 PDF-PrÃ¤sentation Generator mit ReportLab
 Erstellt eine PDF mit 8 Folien aus Projektdokumentation.
 """
 
@@ -16,8 +16,8 @@ import os
 from pathlib import Path
 
 # Projekt-Verzeichnis
-project_dir = str(Path(__file__).resolve().parents[2])
-presentation_dir = os.path.join(project_dir, "presentation")
+project_dir = str(Path(__file__).resolve().parents[4])
+presentation_dir = os.path.join(project_dir, "docs", "internal", "presentation")
 
 # Verzeichnis erstellen, falls nicht vorhanden
 os.makedirs(presentation_dir, exist_ok=True)
@@ -31,7 +31,7 @@ class PDFSlide:
         self.slides = []
 
     def add_slide(self, title, content_lines, title_bg_color=None):
-        """Folie hinzufügen"""
+        """Folie hinzufÃ¼gen"""
         self.slides.append({
             'title': title,
             'content': content_lines,
@@ -104,7 +104,7 @@ class PDFSlide:
                     c.drawString(0.6*inch, y_pos, line)
                 y_pos -= line_height
 
-# Präsentation erstellen
+# PrÃ¤sentation erstellen
 pdf = PDFSlide(pdf_path)
 
 # FOLIE 1: Titel
@@ -118,10 +118,10 @@ pdf.add_slide("MinAn V1", [
 # FOLIE 2: Problem und Ziel
 pdf.add_slide("Problem und Ziel", [
     "Problem: CSV-Dateien schnell und lokal analysieren",
-    "Anforderung: Originaldatei muss unverändert bleiben",
+    "Anforderung: Originaldatei muss unverÃ¤ndert bleiben",
     "",
     "Ziele von MinAn V1:",
-    "  - Lokal, schnell, verständlich",
+    "  - Lokal, schnell, verstÃ¤ndlich",
     "  - Portable Nutzung ohne Pflichtinstallation",
     "  - Windows-Desktop-Tool fuer sofortige Analyse"
 ])
@@ -152,7 +152,7 @@ pdf.add_slide("Architektur & Datenschutz", [
     "Workflow: Laden -> Analysieren -> Bearbeiten -> Exportieren"
 ])
 
-# FOLIE 5: Benutzeroberfläche
+# FOLIE 5: BenutzeroberflÃ¤che
 pdf.add_slide("Benutzeroberflaeche", [
     "Tab-Navigation:",
     "  - Ueberblick | Tabelle | Kennzahlen | Diagramme | Bearbeitung | Export",
@@ -164,7 +164,7 @@ pdf.add_slide("Benutzeroberflaeche", [
     "Kennzahlen-Tab: Mean, Median, Std, Min, Max pro Spalte"
 ])
 
-# FOLIE 6: Qualitätssicherung
+# FOLIE 6: QualitÃ¤tssicherung
 pdf.add_slide("Qualitaetssicherung", [
     "75/75 Unit-Tests erfolgreich (100%)",
     "",
@@ -177,7 +177,7 @@ pdf.add_slide("Qualitaetssicherung", [
     "Automatische Encoding/Separator-Erkennung getestet"
 ])
 
-# FOLIE 7: Release & Portabilität
+# FOLIE 7: Release & PortabilitÃ¤t
 pdf.add_slide("Release & Portabilitaet", [
     "One-Folder-Release: dist/MinAn_1_4/",
     "",
@@ -206,4 +206,5 @@ pdf.add_slide("Fazit", [
 # PDF erzeugen
 pdf.generate()
 print("[OK] PDF erstellt: {}".format(pdf_path))
-print("Praesentationsenthält 8 Folien (deutsch, Landscape A4)")
+print("PraesentationsenthÃ¤lt 8 Folien (deutsch, Landscape A4)")
+

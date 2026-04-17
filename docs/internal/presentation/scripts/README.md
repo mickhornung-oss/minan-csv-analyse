@@ -6,7 +6,7 @@ Praesentationsdateien und PDF-Exports.
 ## Einordnung
 - Nicht Teil des produktiven MinAn-Kerns
 - Nicht fuer den normalen Nutzer-Startpfad erforderlich
-- Duerfen Projektartefakte in `presentation/` erzeugen
+- Duerfen Projektartefakte in `docs/internal/presentation/` erzeugen
 
 ## Ausfuehrung
 - Ausfuehrung vom Projektordner aus empfohlen

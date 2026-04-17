@@ -7,8 +7,8 @@ Set fso = CreateObject("Scripting.FileSystemObject")
 projectRoot = fso.GetParentFolderName(WScript.ScriptFullName)
 projectRoot = fso.GetParentFolderName(projectRoot)
 projectRoot = fso.GetParentFolderName(projectRoot)
-pptxPath = projectRoot & "\presentation\MinAn_1_4_Abschlusspraesentation.pptx"
-pdfPath = projectRoot & "\presentation\MinAn_1_4_Abschlusspraesentation.pdf"
+pptxPath = projectRoot & "\\docs\\internal\\presentation\\MinAn_1_4_Abschlusspraesentation.pptx"
+pdfPath = projectRoot & "\\docs\\internal\\presentation\\MinAn_1_4_Abschlusspraesentation.pdf"
 
 On Error Resume Next
 
@@ -38,3 +38,4 @@ objPresentation.Close
 objPPT.Quit
 
 WScript.Echo "Export abgeschlossen: " & pdfPath
+

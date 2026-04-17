@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Erzeugt die aktuelle Abschlusspräsentation aus dem Stand MinAn 1.4."""
+"""Erzeugt die aktuelle AbschlussprÃ¤sentation aus dem Stand MinAn 1.4."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "windows")
 
-PROJECT_DIR = Path(__file__).resolve().parents[2]
+PROJECT_DIR = Path(__file__).resolve().parents[4]
 SRC_DIR = PROJECT_DIR / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
@@ -34,7 +34,7 @@ from minan_v1.resources import sample_data_path
 from minan_v1.ui.main_window import MainWindow
 
 
-PRESENTATION_DIR = PROJECT_DIR / "presentation"
+PRESENTATION_DIR = PROJECT_DIR / "docs" / "internal" / "presentation"
 ASSET_DIR = PRESENTATION_DIR / "generated_assets"
 SLIDE_DIR = ASSET_DIR / "current_slides"
 
@@ -169,7 +169,7 @@ def build_slides(test_count: int, shots: dict[str, Path]) -> list[Slide]:
             title="Problem und Ziel",
             bullets=[
                 "CSV-Dateien sollen ohne Installation lokal geladen und schnell eingeordnet werden.",
-                "Der erste Blick auf Struktur, Datenqualität, Kennzahlen und Diagramme soll direkt verfügbar sein.",
+                "Der erste Blick auf Struktur, DatenqualitÃ¤t, Kennzahlen und Diagramme soll direkt verfÃ¼gbar sein.",
                 "Die Originaldatei bleibt unangetastet; gearbeitet wird auf einer Arbeitskopie und aktiven Sicht.",
                 "Nutzdaten sollen im portablen Release sichtbar im Hauptordner landen, nicht versteckt in Systempfaden.",
             ],
@@ -179,11 +179,11 @@ def build_slides(test_count: int, shots: dict[str, Path]) -> list[Slide]:
             title="Funktionsumfang 1.4",
             bullets=[
                 "CSV laden mit Encoding- und Separator-Erkennung.",
-                "Überblick, Tabelle, Kennzahlen und Diagramme nach dem Laden.",
-                "Bearbeiten auf Arbeitskopie: Mehrfachfilter, Schnellansichten, Markierungen und Typübersteuerung.",
+                "Ãœberblick, Tabelle, Kennzahlen und Diagramme nach dem Laden.",
+                "Bearbeiten auf Arbeitskopie: Mehrfachfilter, Schnellansichten, Markierungen und TypÃ¼bersteuerung.",
                 "Export der aktiven Sicht als neue CSV-Datei.",
                 "Lokaler HTML-Analysebericht aus derselben aktiven Sicht.",
-                "Info / Schnellstart mit Button für die mitgelieferte Beispieldatei.",
+                "Info / Schnellstart mit Button fÃ¼r die mitgelieferte Beispieldatei.",
             ],
             images=[],
         ),
@@ -192,45 +192,45 @@ def build_slides(test_count: int, shots: dict[str, Path]) -> list[Slide]:
             bullets=[
                 "Datenfluss: CSV-Datei -> import_service -> Original-DF -> Arbeitskopie -> aktive Sicht -> CSV/HTML-Ausgabe.",
                 "SessionState trennt Originaldaten, Arbeitskopie und aktive Sicht.",
-                "Services kapseln Import, Profilierung, Qualität, Diagramme, Transformation, Export und Bericht.",
+                "Services kapseln Import, Profilierung, QualitÃ¤t, Diagramme, Transformation, Export und Bericht.",
                 "UI, Services und Domain sind laut Architektur getrennt; relevante Pfade bleiben portabel.",
             ],
             images=[(shots["edit"], "Bearbeiten-Tab mit Filtern, Schnellansichten und Markierungen")],
             footer="Realer Screenshot aus der aktuellen Anwendung mit test_csv_deutsch_200x15.csv",
         ),
         Slide(
-            title="Oberfläche und Screenshots",
+            title="OberflÃ¤che und Screenshots",
             bullets=[
-                "Die Oberfläche bündelt Überblick, Kennzahlen und Diagramme in getrennten Tabs.",
+                "Die OberflÃ¤che bÃ¼ndelt Ãœberblick, Kennzahlen und Diagramme in getrennten Tabs.",
                 "Die mitgelieferte Beispieldatei umfasst 200 Zeilen und 15 Spalten.",
-                "Im Überblick werden Struktur, Warnungen und Hinweise direkt nach dem Laden sichtbar.",
+                "Im Ãœberblick werden Struktur, Warnungen und Hinweise direkt nach dem Laden sichtbar.",
             ],
             images=[
-                (shots["overview"], "Überblick"),
+                (shots["overview"], "Ãœberblick"),
                 (shots["metrics"], "Kennzahlen"),
                 (shots["charts"], "Diagramme"),
             ],
             footer="Verwendet wurden neu erzeugte reale Screenshots aus dem aktuellen Projektstand.",
         ),
         Slide(
-            title="Qualitätssicherung",
+            title="QualitÃ¤tssicherung",
             bullets=[
                 f"Aktueller lokaler Testlauf im Projektordner: {test_count} Tests bestanden.",
-                "Testbereiche laut Testplan: Import, Profilierung, Datenqualität, Diagramme, Transformationen, Export/Bericht sowie Session-State und Pfade.",
+                "Testbereiche laut Testplan: Import, Profilierung, DatenqualitÃ¤t, Diagramme, Transformationen, Export/Bericht sowie Session-State und Pfade.",
                 "Release-Status nennt produktrelevante Tests, erfolgreichen finalen Build und startende EXE.",
-                "Die Schutzregel Originaldatei bleibt unverändert ist in Doku und Tests durchgängig verankert.",
+                "Die Schutzregel Originaldatei bleibt unverÃ¤ndert ist in Doku und Tests durchgÃ¤ngig verankert.",
             ],
             images=[],
             footer="Realer Testlauf: pytest -q im Projektordner",
         ),
         Slide(
-            title="Release und Portabilität",
+            title="Release und PortabilitÃ¤t",
             bullets=[
                 "One-Folder-Release: dist/MinAn_1_4/ mit MinAn.exe, _internal, output und README_Kurzstart.txt.",
                 f"Startdatei: MinAn.exe mit ca. {exe_size_mb()} MB.",
-                "Output-Ordner im Release: output/reports für HTML-Berichte und output/csv für CSV-Exporte.",
+                "Output-Ordner im Release: output/reports fÃ¼r HTML-Berichte und output/csv fÃ¼r CSV-Exporte.",
                 "Die Beispieldatei liegt im Release unter _internal/sample_data/test_csv_deutsch_200x15.csv.",
-                "Keine Pflichtinstallation und keine Nutzdatenablage in _internal außer der mitgelieferten Beispieldatei.",
+                "Keine Pflichtinstallation und keine Nutzdatenablage in _internal auÃŸer der mitgelieferten Beispieldatei.",
             ],
             images=[],
         ),
@@ -239,11 +239,11 @@ def build_slides(test_count: int, shots: dict[str, Path]) -> list[Slide]:
             bullets=[
                 "Der aktuelle Stand ist kein reines V1-Minimum mehr, sondern dokumentiert als MinAn 1.4.",
                 "Erreicht wurden lokaler Schnellstart, portable Release-Struktur, aktive Sicht, CSV-Export und HTML-Bericht.",
-                "Die Architektur bleibt klar getrennt, die Originaldatei bleibt geschützt und der Release ist portable nutzbar.",
+                "Die Architektur bleibt klar getrennt, die Originaldatei bleibt geschÃ¼tzt und der Release ist portable nutzbar.",
                 "Offene Restpunkte wurden in den aktuellen Kerndokumenten nicht als release-blockend ausgewiesen.",
             ],
             images=[],
-            footer="Hinweis: Projektordner heißt weiterhin MinAn V1, die aktuelle Produktbezeichnung in den Quellen ist MinAn 1.4.",
+            footer="Hinweis: Projektordner heiÃŸt weiterhin MinAn V1, die aktuelle Produktbezeichnung in den Quellen ist MinAn 1.4.",
         ),
     ]
 
@@ -442,3 +442,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

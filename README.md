@@ -1,70 +1,117 @@
-# MinAn 1.4 - CSV Quick Analysis
+# MinAn V1
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Tests](https://github.com/mickhornung-oss/minan-csv-analyse/actions/workflows/python-tests.yml/badge.svg)](https://github.com/mickhornung-oss/minan-csv-analyse/actions/workflows/python-tests.yml)
 
-Portable Windows desktop tool for rapid CSV analysis. Load a file and get structural profiling, data quality checks, charts, filtered views, and a local HTML report export. The source CSV is not modified.
+Stable release (`v1.4.0`) of a production-ready Windows desktop mini-tool for fast CSV analysis.
 
-## Demo
+## Product Overview
 
-Screenshot will be added after the next UI capture update.
+MinAn loads CSV files, analyzes structure and data quality, and lets users filter/edit an active view before exporting CSV or HTML reports. The source CSV is never overwritten.
 
-## Features
+Target users: analysts, QA teams, and developers who need fast local CSV sanity checks without cloud dependencies.
 
-| Feature | Details |
-|---|---|
-| CSV Loading | Auto-detects encoding and separator |
-| Structural Profile | Column types, missing values, cardinality |
-| Data Quality Report | Duplicates, empty columns, high-missing detection |
-| Charts | Histograms, bar charts, distribution plots |
-| Filtered Views | Multi-filter with type overrides |
-| CSV Export | Export the active filtered view |
-| HTML Report | Local analysis report from active view |
-| Portable Build | Single `.exe`, no installation required |
+![MinAn release screenshot](assets/screenshots/minan_v1_release.png)
 
-## Quick Start (Dev Mode)
+## Status and Scope
 
-```batch
-pip install -r requirements.txt
-run_dev.bat
-```
+- Product line: `MinAn 1.4`
+- Release identity: `v1.4.0`
+- Scope: local/offline desktop usage (Windows)
+- Delivery model: portable one-folder build (`dist/MinAn_1_4/`)
+- Public hosted demo: not provided
+- Reference test run (2026-04-17): `155 passed` via `pytest -q`
 
-## Build Portable Release
+## Core Features
 
-```batch
-build_release.bat
-```
-
-Output: `dist/MinAn_1_4/MinAn.exe` (portable, no Python installation needed).
+- CSV import with automatic encoding and separator detection
+- Dataset overview with profile, quality findings, and summary
+- Active-view workflow with filters and quick views (missing values, duplicates, outlier candidates)
+- Tab-based desktop UI (Overview, Table, Metrics, Charts, Edit, Export)
+- CSV export of the active view
+- HTML report export of the active view
+- Bundled sample dataset for quick local evaluation
 
 ## Tech Stack
 
 - Python 3.10+
-- PySide6
-- pandas
-- matplotlib
-- PyInstaller
+- PySide6 (desktop UI)
+- pandas + numpy (data processing)
+- matplotlib (charts/report snapshots)
+- pytest (automated tests)
+- PyInstaller (portable packaging)
 
-## Tests
+## Quickstart
 
-```bash
-pytest tests/ -v
-```
+### End user (portable build)
 
-Current suite size: 155 tests.
+1. Build a release (or use an already built one):
+   `build_release.bat`
+2. Run:
+   `dist\\MinAn_1_4\\MinAn.exe`
 
-## Project Structure
+### Developer mode
+
+1. Install dependencies:
+   `pip install -r requirements.txt`
+2. Start app:
+   `run_dev.bat`
+
+## Testing and Quality Gates
+
+Baseline local gates (compile + tests):
+
+`python scripts/quality_gates.py`
+
+Full local gates (compile + tests + release build + EXE smoke):
+
+`python scripts/quality_gates.py --with-build --with-exe-smoke`
+
+## Packaging and Build
+
+Build command:
+
+`build_release.bat`
+
+Build source of truth:
+
+- PyInstaller spec: `packaging/pyinstaller/minan_v1.spec`
+- Windows version metadata: `packaging/pyinstaller/windows_version_info.txt`
+- Bundled release sample: `_internal/sample_data/test_csv_deutsch_200x15.csv`
+
+Generated artifacts are intentionally not versioned (`build/`, `dist/`, `output/`).
+
+## Documentation
+
+Primary docs index: [`docs/README.md`](docs/README.md)
+
+- Release notes: [`docs/release.md`](docs/release.md)
+- Change history: [`CHANGELOG.md`](CHANGELOG.md)
+- Project status: [`docs/status.md`](docs/status.md)
+
+## Repository Structure
 
 ```text
-src/minan_v1/
-|-- domain/      # Data models and enums
-|-- services/    # Business logic services
-`-- ui/          # PySide6 UI components
-
-tests/           # Test suite
+.
+|- src/minan_v1/              # app core (domain/services/ui/utils)
+|- tests/                     # automated tests
+|- assets/                    # icons, sample CSV, screenshots
+|- packaging/pyinstaller/     # versioned build/packaging sources
+|- docs/                      # public + internal documentation
+|- scripts/                   # product-check helper scripts
+|- run_dev.bat                # local developer start
+|- build_release.bat          # release build entrypoint
+`- requirements.txt
 ```
 
-## Topics
+## Known Limitations
 
-`python` `gui` `pandas` `data-analysis` `csv` `data-visualization` `desktop-application` `pyside6`
+- Windows-first desktop target (no cross-platform packaging support documented yet)
+- No hosted/web demo; evaluation is local only
+- CI remains intentionally minimal (Windows quality gates on push/PR, packaging smoke on manual dispatch)
+- No automated GitHub artifact publishing pipeline is defined yet
+
+## License
+
+Licensed under the MIT License. See [`LICENSE`](LICENSE).

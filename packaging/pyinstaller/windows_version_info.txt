@@ -1,0 +1,31 @@
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 4, 0, 0),
+    prodvers=(1, 4, 0, 0),
+    mask=0x3F,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0),
+  ),
+  kids=[
+    StringFileInfo(
+      [
+        StringTable(
+          "040704B0",
+          [
+            StringStruct("CompanyName", "MinAn Software"),
+            StringStruct("FileDescription", "MinAn 1.4 - CSV-Schnellanalyse"),
+            StringStruct("FileVersion", "1.4.0.0"),
+            StringStruct("InternalName", "MinAn"),
+            StringStruct("OriginalFilename", "MinAn.exe"),
+            StringStruct("ProductName", "MinAn 1.4"),
+            StringStruct("ProductVersion", "1.4"),
+          ],
+        )
+      ]
+    ),
+    VarFileInfo([VarStruct("Translation", [1031, 1200])]),
+  ],
+)

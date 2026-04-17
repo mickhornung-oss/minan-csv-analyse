@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Erzeugt eine kleine Abschlusspräsentation für MinAn V1 als PPTX und PDF."""
+"""Erzeugt eine kleine AbschlussprÃ¤sentation fÃ¼r MinAn V1 als PPTX und PDF."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from typing import Iterable
 
 os.environ.setdefault("QT_QPA_PLATFORM", "windows")
 
-PROJECT_DIR = Path(__file__).resolve().parents[2]
+PROJECT_DIR = Path(__file__).resolve().parents[4]
 SRC_DIR = PROJECT_DIR / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
@@ -36,7 +36,7 @@ from minan_v1.services.summary_service import generate_summary
 from minan_v1.ui.main_window import MainWindow
 
 
-PRESENTATION_DIR = PROJECT_DIR / "presentation"
+PRESENTATION_DIR = PROJECT_DIR / "docs" / "internal" / "presentation"
 ASSET_DIR = PRESENTATION_DIR / "generated_assets"
 PPTX_PATH = PRESENTATION_DIR / "MinAn_1_4_Abschlusspraesentation.pptx"
 PDF_PATH = PRESENTATION_DIR / "MinAn_1_4_Abschlusspraesentation.pdf"
@@ -184,7 +184,7 @@ def build_slide_specs(test_count: int, screenshots: dict[str, Path]) -> list[Sli
             bullets=[
                 "Portables Windows-Tool zur lokalen CSV-Schnellanalyse",
                 "Version 1.0.0",
-                "Abschlusspräsentation auf Basis des realen Projektstands",
+                "AbschlussprÃ¤sentation auf Basis des realen Projektstands",
             ],
             footer="Quellen: README, Architekturdoku, Analyseumfang, Release- und Testdokumentation",
         ),
@@ -192,8 +192,8 @@ def build_slide_specs(test_count: int, screenshots: dict[str, Path]) -> list[Sli
             title="Problem und Ziel",
             bullets=[
                 "Ausgangslage: CSV-Dateien sollen schnell lesbar und lokal analysierbar sein.",
-                "Zielbild von MinAn V1: lokal, schnell, verständlich und ohne Pflichtinstallation.",
-                "Zentrale Schutzregel: Originaldatei bleibt unverändert, gearbeitet wird auf einer Arbeitskopie.",
+                "Zielbild von MinAn V1: lokal, schnell, verstÃ¤ndlich und ohne Pflichtinstallation.",
+                "Zentrale Schutzregel: Originaldatei bleibt unverÃ¤ndert, gearbeitet wird auf einer Arbeitskopie.",
                 "Ergebnis: Analyse und Export als neue CSV-Datei im selben Nutzungskontext.",
             ],
         ),
@@ -201,10 +201,10 @@ def build_slide_specs(test_count: int, screenshots: dict[str, Path]) -> list[Sli
             title="Funktionsumfang V1",
             bullets=[
                 "CSV laden mit automatischer Erkennung von Encoding und Trennzeichen.",
-                "Überblick mit Dateiinfo, Strukturprofil, Datenqualität und Kurzzusammenfassung.",
+                "Ãœberblick mit Dateiinfo, Strukturprofil, DatenqualitÃ¤t und Kurzzusammenfassung.",
                 "Tabellenvorschau, Standardkennzahlen und Standarddiagramme.",
-                "Bearbeiten auf Arbeitskopie: umbenennen, löschen, ausblenden, filtern, sortieren, markieren.",
-                "Export der Arbeitskopie als neue CSV-Datei ohne Überschreiben der Quelle.",
+                "Bearbeiten auf Arbeitskopie: umbenennen, lÃ¶schen, ausblenden, filtern, sortieren, markieren.",
+                "Export der Arbeitskopie als neue CSV-Datei ohne Ãœberschreiben der Quelle.",
             ],
         ),
         SlideSpec(
@@ -212,39 +212,39 @@ def build_slide_specs(test_count: int, screenshots: dict[str, Path]) -> list[Sli
             bullets=[
                 "Datenfluss: Originaldatei -> Import -> Original-DF -> Arbeitskopie -> Analyse/Bearbeitung -> Export-CSV.",
                 "SessionState trennt Original und Arbeitskopie strikt voneinander.",
-                "Services kapseln Import, Profilierung, Qualitätsprüfung, Transformation und Export.",
+                "Services kapseln Import, Profilierung, QualitÃ¤tsprÃ¼fung, Transformation und Export.",
                 "UI ist von der Fachlogik getrennt; Pfade bleiben relativ und portabel.",
             ],
             screenshot=screenshots.get("overview"),
-            footer="Beispielansicht: Überblick-Tab mit geladener Beispiel-CSV aus assets/sample_data",
+            footer="Beispielansicht: Ãœberblick-Tab mit geladener Beispiel-CSV aus assets/sample_data",
         ),
         SlideSpec(
-            title="Oberfläche",
+            title="OberflÃ¤che",
             bullets=[
-                "Tabs: Überblick, Tabelle, Kennzahlen, Diagramme, Bearbeiten, Export.",
-                "Der Überblick bündelt Strukturprofil, Qualitätsbefunde sowie Warnungen und Hinweise.",
+                "Tabs: Ãœberblick, Tabelle, Kennzahlen, Diagramme, Bearbeiten, Export.",
+                "Der Ãœberblick bÃ¼ndelt Strukturprofil, QualitÃ¤tsbefunde sowie Warnungen und Hinweise.",
                 "Kennzahlen und Diagramme werden passend zum Datentyp bereitgestellt.",
             ],
             screenshot=screenshots.get("metrics"),
             footer="Echter Screenshot aus MinAn V1 mit der im Projekt enthaltenen Beispiel-CSV",
         ),
         SlideSpec(
-            title="Qualitätssicherung",
+            title="QualitÃ¤tssicherung",
             bullets=[
                 f"Aktueller Testlauf im Projektordner: {test_count} Tests bestanden, 0 fehlgeschlagen.",
-                "Testabdeckung laut Testplan: Import, Profilierung, Qualität, Diagramme, Transformation, Export, Session-State.",
+                "Testabdeckung laut Testplan: Import, Profilierung, QualitÃ¤t, Diagramme, Transformation, Export, Session-State.",
                 "Smoke-Check und Produkt-Check sind in docs/RELEASE_STATUS.md als erfolgreich dokumentiert.",
-                "Wesentliche Schutzregel wurde validiert: Originaldatei und original_df bleiben unverändert.",
+                "Wesentliche Schutzregel wurde validiert: Originaldatei und original_df bleiben unverÃ¤ndert.",
             ],
             screenshot=screenshots.get("charts"),
             footer="Hinweis: docs/RELEASE_STATUS.md nennt 75 Tests; der aktuelle lokale Lauf ergab 83 Tests.",
         ),
         SlideSpec(
-            title="Release, Portabilität und Fazit",
+            title="Release, PortabilitÃ¤t und Fazit",
             bullets=[
                 "Release-Form: One-Folder-Paket in dist/MinAn_1_4/ mit MinAn.exe und _internal/.",
                 "Portable Nutzung ohne Installer, ohne Registry-Eintrag und ohne Schreibzugriff auf Systemverzeichnisse.",
-                "V1-Ziele sind erreicht: lokale CSV-Schnellanalyse, verständliche Oberfläche, sichere Arbeitskopie, Export als neue Datei.",
+                "V1-Ziele sind erreicht: lokale CSV-Schnellanalyse, verstÃ¤ndliche OberflÃ¤che, sichere Arbeitskopie, Export als neue Datei.",
                 "Reale Restpunkte laut Doku: kein App-Icon, keine EXE-Versionsinfo, keine automatische Bereinigung, keine Drilldowns.",
             ],
             footer="Stand: Build- und Releasestatus aus den Projektdateien, keine externen Quellen",
@@ -435,3 +435,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
