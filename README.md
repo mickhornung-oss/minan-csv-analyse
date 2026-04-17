@@ -12,7 +12,8 @@ MinAn loads CSV files, analyzes structure and data quality, and lets users filte
 
 Target users: analysts, QA teams, and developers who need fast local CSV sanity checks without cloud dependencies.
 
-![MinAn release screenshot](assets/screenshots/minan_v1_release.png)
+![MinAn main analysis view](assets/screenshots/minan_v1_main.png)
+![MinAn metrics analysis view](assets/screenshots/minan_v1_analysis.png)
 
 ## Status and Scope
 
